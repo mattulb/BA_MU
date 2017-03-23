@@ -1,0 +1,91 @@
+\begin{thebibliography}{GMW87}
+
+\bibitem[BDS]{BDSGEinz5}
+Bdsg - einzelnorm.
+\newblock \url{https://www.gesetze-im-internet.de/bdsg_1990/__3a.html}.
+\newblock (Accessed on 02/08/2017).
+
+\bibitem[Ben86]{benaloh1986secret}
+Josh~Cohen Benaloh.
+\newblock Secret sharing homomorphisms: Keeping shares of a secret secret.
+\newblock In {\em Conference on the Theory and Application of Cryptographic
+  Techniques}, pages 251--260. Springer, 1986.
+
+\bibitem[CD09]{cramer2009}
+Ronald Cramer and Ivan Damg{\aa}rd.
+\newblock Multiparty computation, an introduction.
+\newblock 2009.
+
+\bibitem[CDN15]{Cramer}
+Ronald Cramer, Ivan~Bjerre Damgrd, and Jesper~Buus Nielsen.
+\newblock {\em Secure Multiparty Computation and Secret Sharing}.
+\newblock Cambridge University Press, New York, NY, USA, 1st edition, 2015.
+
+\bibitem[EN16]{englehardt2016online}
+Steven Englehardt and Arvind Narayanan.
+\newblock Online tracking: A 1-million-site measurement and analysis.
+\newblock In {\em Proceedings of the 2016 ACM SIGSAC Conference on Computer and
+  Communications Security}, pages 1388--1401. ACM, 2016.
+
+\bibitem[Fai]{BASamim}
+Mohammad Harun~Samim Faiz.
+\newblock {Untersuchung und Implementierung ausgewählter homomorpher
+  Hashing-Verfahren für die Integritätsprüfung homomorpher Chiffrate}.
+
+\bibitem[GMW87]{goldreich1987play}
+Oded Goldreich, Silvio Micali, and Avi Wigderson.
+\newblock How to play any mental game.
+\newblock In {\em Proceedings of the nineteenth annual ACM symposium on Theory
+  of computing}, pages 218--229. ACM, 1987.
+
+\bibitem[How09]{HowOnlin70}
+How online tracking companies know most of what you do online (and what social
+  networks are doing to help them) | electronic frontier foundation.
+\newblock
+  \url{https://www.eff.org/deeplinks/2009/09/online-trackers-and-social-networks},
+  09 2009.
+\newblock (Accessed on 02/08/2017).
+
+\bibitem[Lys08]{lysyanskaya2008keep}
+Anna Lysyanskaya.
+\newblock How to keep secrets safe.
+\newblock {\em Scientific American}, 299(3):88--95, 2008.
+
+\bibitem[Neu]{NeueEUDa50}
+Neue eu-datenschutzregeln: Facebook erst ab 16 jahren | heise online.
+\newblock
+  \url{https://www.heise.de/newsticker/meldung/Neue-EU-Datenschutzregeln-Facebook-erst-ab-16-Jahren-3044585.html}.
+\newblock (Accessed on 02/08/2017).
+
+\bibitem[Sch99]{schoenmakers1999simple}
+Berry Schoenmakers.
+\newblock A simple publicly verifiable secret sharing scheme and its
+  application to electronic voting.
+\newblock In {\em Annual International Cryptology Conference}, pages 148--164.
+  Springer, 1999.
+
+\bibitem[Sha79]{shamir1979share}
+Adi Shamir.
+\newblock How to share a secret.
+\newblock {\em Communications of the ACM}, 22(11):612--613, 1979.
+
+\bibitem[Sma03]{smart2003}
+Nigel~Paul Smart.
+\newblock {\em Cryptography: An Introduction}, volume~5.
+\newblock McGraw-Hill New York, 2003.
+
+\bibitem[Yao82]{yao1982protocols}
+Andrew~C Yao.
+\newblock Protocols for secure computations.
+\newblock In {\em Foundations of Computer Science, 1982. SFCS'08. 23rd Annual
+  Symposium on}, pages 160--164. IEEE, 1982.
+
+\bibitem[Zie15]{CZ}
+Christian Zielinski.
+\newblock Introduction to secure multi-party computations.
+\newblock
+  \url{https://github.com/czielinski/secmultipartycomp/blob/master/slides/sec_multi_party_comp.pdf},
+  2015.
+\newblock (Accessed on 02/08/2017).
+
+\end{thebibliography}
