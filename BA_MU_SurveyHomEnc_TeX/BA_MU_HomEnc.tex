@@ -1,44 +1,116 @@
 %-----------------------------------------------------------------
 % WRITTEN BY: Matthias Ulbrich
-% February 2017
+% February-May 2017
 %-----------------------------------------------------------------
 
-\documentclass[12pt,a4paper]{scrartcl}				%KOMA-Skript
+\documentclass[12pt,a4paper]{scrartcl}	%KOMA-Skript
 
-%\usepackage[ngerman]{babel}
-\usepackage[USenglish, ngerman]{babel}		%for separation rules, US for \DTMlangsetup
+\usepackage[USenglish, ngerman]{babel}	%Trennung, US for \DTMlangsetup
 \usepackage[autostyle=true,german=quotes]{csquotes} %\enquote
-\usepackage[utf8]{inputenc}			%fontencoding
+\usepackage[utf8x]{inputenc}			%fontencoding
 \usepackage{hyperref}				%auto generate links in document
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{color}					%\textcolor
 \usepackage{acronym}				%abbreviations page
-\usepackage{datetime2}		%\DTMlangsetup
+\usepackage{datetime2}	            %\DTMlangsetup
 \usepackage[margin=3.2cm]{geometry}
 \usepackage{eucal}					%more calligraphy
 \usepackage[nottoc]{tocbibind} 		%References in contents
 \usepackage{svg}
 \usepackage{graphicx}
-
+\usepackage{amsthm}                 %theorems
+\usepackage{coloremoji}             %http://www.alecjacobson.com/weblog/?p=4018
 
 
 \setcounter{tocdepth}{4}			%show subsubsubsections in table
 \setcounter{secnumdepth}{4}
 \DTMlangsetup{ord=raise}			%dates with superscript
 
+
 \newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\} %paragraph with newline
 
-%-----------------------------------------------------------------
-% BEGIN DOCUMENT
-%-----------------------------------------------------------------
 \begin{document}
+	
+\begin{titlepage}
+%-----------------------------------------------------------------
+% TITLEPAGE
+%-----------------------------------------------------------------	
+\begin{center}
+		\large
+		Universität Bonn \\
+		Fakultät für Mathematik und Naturwissenschaften \\
+	    Institut für Informatik IV \\
+		\vspace*{1 cm} 
+			
+		\includegraphics[scale=0.11]{UniBonnSiegel.png}{\centering}
+		\vspace*{3 cm}  
+			
+		{\fontfamily{cmss}\selectfont
+			\Large
+			Bachelorarbeit
+			\vspace*{0.5cm}
+				
+			\LARGE 
+				\textbf{Lorem Ipsum... 💭}
+			\vspace*{3 cm}       
+		}
+			
+		Matthias Ulbrich \\  
+		2743974
+		\vspace{1 cm}
+			
+		\today
+		\vspace*{1 cm}
+			
+		\begin{tabular}{rl}
+			Erster Gutachter:  &Dipl.-Inf. Saffija Kasem-Madani \\
+			Zweiter Gutachter: &Prof. Dr. Michael Meier
+		\end{tabular}
+		
+	\end{center}
+\end{titlepage}	
 
-\subsection*{Ziele}	
+\section*{Eidesstattliche Erklärung}
+%-----------------------------------------------------------------
+% Eidesstattliche Erklärung
+%-----------------------------------------------------------------
+\pagenumbering{roman}
+	
+%I hereby declare that I have authored this thesis independently, that I have not used other than the declared sources, and that I have explicitly marked all material which has been quoted either literally or by content from the used sources. \\[4ex]
+Hiermit erkläre ich an Eides Statt, dass ich die vorliegende Arbeit selbstständig und nur unter Zuhilfenahme der ausgewiesenen Hilfsmittel angefertigt habe. Sämtliche Stellen der Arbeit, die im Wortlaut oder dem Sinn nach anderen verfügbaren Werken entnommen sind, habe ich mit Quellenangaben kenntlich gemacht. \\[4ex]
+	
+Datum: ....................      
+\hspace*{1cm}
+Unterschift: ..........................................
+\clearpage	
+
+\section*{Danksagung und Widmung}
+Vielen Dank an\ldots	
+%I want to thank my supervisor Dipl.-Inf. Saffija Kasem-Madani for the professional support and Prof. Dr. Michael Meier for the possibility to write this bachelor thesis in his department. \\
+%Many thanks to my girlfriend for the emotional support, to my sister, parents and my great aunt for the financial support during the course of my study. I dedicate this work to you.
+\clearpage
+
+\section*{Abkürzungen}
+%During their first use these terms will be spelled out completely. Any further mentions will use the corresponding abbreviation.
+
+\begin{acronym}[AAAA] 							% AAAA for alignment
+	\acro{DSK}{Determinisitisches Symmetrisches Kryptosystem}
+
+\end{acronym}
+\clearpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}				% start to count from 1
+%-----------------------------------------------------------------
+% Anfang des Inhalts
+%-----------------------------------------------------------------
+\section{Einleitung}	
 Inhaltlicher Leitfaden für die gesamte Bachelorarbeit. Zu fully-, semi- und partial homomorphic encryption je eine umgesetzte Realisierung recherchieren und überlegen wie man sie klassifizieren könnte.
 
 Für jede identifizierte und untersuchen, ob die Malleability des verwendeten Kryptosystems betrachtet wurde und wie damit umgegangen wurde. Bzw. ob integritätssichernde Maßnahmen ergriffen werden.	
-	
-\subsection*{Fragen beim Lesen der Paper}
+\\
+
+\textbf{Fragen beim Lesen der Paper}
 \begin{enumerate}
 	\item Handelt es sich um ein fully-, semi-, oder partial homomorphic Kryptosystem?
 	\item Warum haben sich die Wissenschaftler für das jeweilige Kryptosystem entschieden?
@@ -47,25 +119,168 @@ Für jede identifizierte und untersuchen, ob die Malleability des verwendeten Kr
 \end{enumerate}
 \newpage
 
-\section*{Kurzdefinitionen}
-\subsection*{Malleability}
+\section{Homomorphe Kryptosysteme}
+
+\subsection{Schutzziele der Kryptografie}
+Die Kryptografie möchte mehrere Schutzziele für die Speicherung, Vervielfältigung und Übertragung von Informationen umsetzen und dazu verschiedene Verfahren bereitstellen. Grundlegende Schutzziele beim Übertragen von Informationen zwischen mehreren Personen mit Nachrichten sind dann \cite{mm2015itsec}\cite[p.2]{delfs2002introduction}:
+\begin{enumerate}
+	\item \textbf{Vertraulichkeit:} Keine unauthorisierte Kenntnisnahme. Nur dazu berechtigte Personen sollen eine Information lesen können oder Zugang zur einer Information bekommen.
+	\item \textbf{Integrität:} Keine unauthorisierte unbemerkte  Datenmanipulation. Dies schützt insbesondere vor dem Hinterlegen von Falschdaten in einer Nachricht oder einer oder dem Fehlen von Teilen einer Nachricht.
+	\item \textbf{Authentizität:} Der Empfänger kann den Verfasser einer Nachricht verifizieren. 
+	\item \textbf{Nichtabstreitbarkeit:} Der Sender kann dem Versand nicht mehr abstreiten der Verfasser einer Nachricht gewesen zu sein.
+\end{enumerate}
+
+\subsection{Kryptosysteme}
+Ein Kryptosystem ist ein Sammlung von Algorithmen um das Schutzziel der Vertraulichkeit beim Übertragen von Informationen in Nachrichten umzusetzen.
+
+Damit ermöglicht ein Kryptosystem zwei Parteien Alice und Bob über einen ungeschützten Kanal in dem die Nachricht übertragen wird zu kommunizieren, ohne das eine dritte Partei welche mithört Zugang zu dem Inhalt der Nachricht bekommt.
+
+Die zugrundelegenden Algorithmen und resultierende Eigenschaften über die Beziehung von Klartexten zu Chiffretexten führen zu ein verschiedenen Klassen von Kryptosystemen. Diese Kryptosysteme führen wir in diesem Abschnitt ein. In der Literatur ist es üblich bei \enquote{einfacheren} Kryptosystem die deterministisch oder symmetrisch sind, diese Bezeichnungen wegzulassen. Zur besseren Abgrenzung werden in diesem Abschnitt Kryptosysteme immer mit ihren Eigenschaften genannt (z.B. deterministisches symmetrisches Kryptosystem).
+
+Formal definieren wir \cite[p.1]{stinson2006cryptography}:
+
+\newtheorem{theorem}{Definition}[section]
+\begin{theorem}[Kryptosytem]
+\label{KS}
+	Ein Kryptosystem ist ein Quintupel $(\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ welches folgenden Eigenschaften genügt:
+	\begin{enumerate}
+		\item $\mathcal{P}$ ist eine endliche Menge von Klartexten, der Klartextraum.
+		\item $\mathcal{C}$ ist eine endliche Menge von Chiffretexten, der Chiffreraum.
+		\item $\mathcal{K}$ ist eine endliche Menge möglicher Schlüssel, der Schlüsselraum.
+		\item Für alle Schlüssel $k\in \mathcal{K}$ gibt es eine Verschlüsselungsfunktion $\mathcal{E}\ni e_k:\mathcal{P}\rightarrow\mathcal{C}$ und zugehörige Entschlüsselungsfunktion $\mathcal{D}\ni d_k:\mathcal{C}\rightarrow\mathcal{D}$, so dass für alle Klartexte $x\in\mathcal{P}$ folgende Identität gilt: $d_k(e_k(x)) = x$
+	\end{enumerate}
+\end{theorem}
+
+Grundsätzlich gibt es also drei Algorithmen in einem Kryptosystem: Einen für die Erzeugung des Schlüssels, einen für die Verschlüsselung und einen für die Entschlüsselung \cite{Cryptosy29:online}.
+
+\begin{theorem}[Symmetrisches Kryptosystem]
+	 Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein Kryptosystem. Dann nennen wir K symmetrisch, wenn sowohl die Verschlüsselungs-funktion $e_k$ als auch die Entschlüsselungsfunktion $d_k$ vollständig von \textit{demselben} Schlüssel $k\in\mathcal{K}$ abhängen. Vollständig bedeutet, dass diese Funktionen insbesondere nicht nur von einen Teilschlüssel von $k$ anhängen, wenn der Schlüssel k aus mehreren Parametern zusammengesetzt ist. Letzteres ist in \ref{KS} nicht vorrausgesetzt.
+\end{theorem}
+
+Ein Nachteil von Symmetrischen Kryptosystemen liegt auf der Hand: Da sowohl Alice als auch Bob den gleichen geheimen Schlüssel benötigen, muss dieser über einen sicheren Kanal übertragen werden. Daher sind  symmetrische Kryptosysteme auch bekannt als private-key Kryptosysteme.
+
+Im Gegensatz dazu gibt es Kryptosysteme bei denen sich $K$ aus einem privaten und öffentlichen Teilschlüssel zusammensetzt von Alice den öffentlichen Teilschlüssel bekannt geben kann um dritten zu ermöglichen ihr Informationen vertraulich zukommen zu lassen. Öffentlicher und privater Teilschlüssel stehen in einem Zusammenhang, der jedoch für Angreifer mit begrenzter Rechenkapazität nicht möglich ist zu erschließen.
+
+\begin{theorem}[Asymmetrisches Kryptosystem]
+Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein Kryptosystem. Dann nennen wir K asymmetrisch wenn sich der Schlüssel $k\in\mathcal{K}$ zusammensetzt aus $k=(k_s, k_p)$. Die Verschlüsselungsfunktion ist dann $\mathcal{E}\ni e_{k_p}:\mathcal{P}\rightarrow\mathcal{C}$, während die Entschlüsselungsfunktion $\mathcal{D}\ni d_{k_s}:\mathcal{P}\rightarrow\mathcal{C}$ ist. Während $e_k$ von beliebigen Parteien ausgeführt werden kann, kann $d_k$ nur vom Besitzer des privaten Teilschlüssel $k_s$ ausgeführt werden. $k_s$ muss geheim gehalten werden.
+\end{theorem}
+
+Diese drei Definitionen genügen noch nicht um zu beschreiben, in welcher Beziehung Klartexte $x$ zu ihren Chiffraten $c$ stehen wenn sie mit dem gleichen Schlüssel $k$ in verschiedenen Ausführungen von $e_k$ erzeugt werden. Dies ist von Bedeutung für mögliche Angriffe der Kryptoanalyse welche in \ref{Sicherheitskriterien} vorgestellt werden.
+
+\begin{theorem}[Deterministisches Kryptosytem]\footnote{Diese Definition ist eine Formalisierung von saloppen Beschreibungen in der Literatur.}
+Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein Kryptosystem. Dann nennen wir K deterministisch wenn gilt: Für einen beliebigen festen Schlüssel $k\in\mathcal{K}$ ist $e_k$ ist injektiv. %Falls $e_k$ nicht injektiv ist, nennen wir K proballistisch.
+\end{theorem}
+
+Seien nun $c_1,c_2\in\mathcal{C}, c_1= c_2$ zwei Chiffrate unter $e_k$, dann folgt daraus für ihre Klartexte, dass $x_1= x_2$. Also führt der gleiche Klartext unter Verwendung desselben Schlüssel bei verschiedenen Ausführungen von der Veschlüsselungsfunktion $d_k$ zu einem identischen Chiffrat!
+
+Jetzt können wir in Abgrenzung zu dieser Definition das Proballistische Kryptosystem einführen. Ein Proballistisches Kryptosystem erzeugt für gleiche Klartexte bei demselben Schlüssel mit jeder Ausführung der Verschlüsselungsfunktion ein
+% im Allgemeinen
+ anderes Chiffrat.
+% Wohlgemerkt: im Allgemeinen, d.h. nicht immer. Deswegen ist dieses Kryptosystem strenggenommen nicht gegensätzlich zu einem Deterministischen Kryptosystem definiert.
+
+Das Konzept eines Proballistischen Kryptosystems wurde ursprünglich von Goldwasser und Micali eingeführt in \cite{goldwasser1984probabilistic}. Wir definieren in Anlehnung an \cite[p.345]{delfs2002introduction}:
+
+\begin{theorem}[Proballistisches Kryptosytem]
+\label{PKS}
+	Ein Proballistisches Kryptosystem ist ein Sextupel $(\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D},\mathcal{R})$. Wie schon in \ref{KS} ist $\mathcal{P}$ ist der Klartextraum, $\mathcal{C}$ der Chiffreraum und $\mathcal{K}$ der Schlüsselraum. Neu sind:
+	\begin{itemize}
+	\item $\mathcal{R}$ ist eine endliche Menge von Zufallszahlen
+	\item Für alle Schlüssel $k\in \mathcal{K}$ gibt es eine Verschlüsselungsfunktion $\mathcal{E}\ni e_k:\mathcal{P}\times\mathcal{R}\rightarrow\mathcal{C}$ und zugehörige Entschlüsselungsfunktion $\mathcal{D}\ni d_k:\mathcal{C}\times\mathcal{R}\rightarrow\mathcal{D}$, so dass für alle Klartexte $x\in\mathcal{P}$ und alle Zufallszahlen $r\in\mathcal{R}$ folgende Identität gilt: $d_k(e_k(x,r)) = x$ 
+	\item Für eine Zufallszahl $r\in\mathcal{R}$ und verschiedene Klartexte $x_1,x_2\in\mathcal{P}, x_1\neq x_2$ gilt: $e_k(x_1,r)\neq e_k(x_2,r)$.
+	
+	\end{itemize}
+\end{theorem}
+
+	Ein Proballistisches Kryptosystem benutzt also Zufall in der Verschlüsselungs-funktion, so dass der gleiche Klartext verschieden verschlüsselt wird. Mit Proballistischen Kryptosystemen werden meistens Asymmetrische Verschlüsselungs-verfahren gemeint, es ist jedoch auch möglich mit Symmetrischen Verschlüsselungs-verfahren diese Eigenschaft zu erreichen, z.B. bei Verwendung von Blockchiffren im Cipher Block Chaining Mode. Die Menge der Zufallszahlen $\mathcal{R}$ entspricht dann der Menge möglicher Initialisierungsvektoren \cite{mm2015itsec}. 
+
+
+
+
+\subsubsection{Homomorphes Kryptosystem}
+
+\subsection{Mathematische Grundlagen}
+
+Wir werden später Homomorphe Kryptosystem im Detail einführen. Um ihre Anwendung zu verstehen, ist es jedoch nötig folgende Algebraische Strukturen nach \cite{tr2015la} einzuführen um ein Verständnis dafür zu schaffen wie Homomorphe Kryptosysteme verwendet werden könnnen.
+
+\begin{theorem}[Gruppe]
+Eine Gruppe ist ein Tupel $(G,+)$ bestehend aus der Menge $G$ und einer Verknüpfung $+$ auf $G$ mit folgenden Eigenschaften:
+\begin{itemize}
+	\item $+$ ist assoziativ
+	\item Es existiert bzgl. $+$ ein neutrales Element $e$ in $G$.
+	\item Jedes $g$ in $G$ ist invertierbar.
+\end{itemize}
+
+Ist die Verknüpfung einer Gruppe zusätzlich kommutativ, so nennt man sie abelsch.
+
+\end{theorem}
+
+\begin{theorem}[Ring]
+\label{Ring}
+Ein Ring ist ein Tripel $(R,+,\cdot)$ bestehend aus der Menge $R$ und zwei Verknüpfungen $+$ und $\cdot$ auf $R$ mit folgenden Eigenschaften:
+\begin{itemize}
+	\item R ist bzgl. $+$ eine abelsche Gruppe.
+	\item $\cdot$ ist assoziativ
+	\item Es gelten die Distributivgesetze: $\forall a,b,c\in R: a\cdot(b+c)=(a\cdot b)+(a\cdot c)$ und $(a+b)\cdot c = (a\cdot c)+(b\cdot c)$
+\end{itemize}
+\end{theorem}
+
+Hat $R$ bzgl. $\cdot$ ein neutrales Element, so nennen wir $R$ einen \enquote{Ring mit Rins}. Ist $R$ bzgl. $\cdot$ kommutativ, so nennen wir $R$ einen \enquote{kommutativen Ring}. 
+
+\begin{theorem}[Körper]
+Sei $K$ ein kommutativer Ring mit Eins wie in \ref{Ring}, so heißt $K$ Körper, wenn die neutralen Elemente bzgl. der Verknüpfungen $+$ und $\cdot$ verschieden sind und alle Elemente bzgl. $\cdot$ invertierbar sind.
+	
+\end{theorem}
+
+Um den Homomorphismus Einführen zu können benötigen wir eine noch mächtigere algebraische Struktur.
+
+\begin{theorem}[K-Vektorraum]
+Sei $(K,+,\cdot)$ ein Körper und $V$ eine Menge. Zusätzlich existieren zwei Verknüpfungen $\oplus: V\times V \rightarrow V$ und $\oplus: K\times V \rightarrow V$, so dass gilt:\footnote{Evtl. ausführlicher formulieren}
+\begin{itemize}
+	\item $\oplus$ ist assoziativ, kommutativ, hat ein neutrales Element bzgl. $V$ und für alle Elemente $v\in V$ Inverse in $V$
+	\item $\otimes$ ist assoziativ, hat ein neutrales Element bzgl. $V$
+	\item Elemente aus $K$ und $V$ sind distributiv
+\end{itemize}
+Dann nennen wir $V$ einen K-Vektorraum.
+\end{theorem}
+
+\begin{theorem}[Homomorphismus]
+Seien $V,W$ zwei K-Vektorräume und $f:V\rightarrow W$ eine Abbildung. Dann nennen wir $f$ einen Homomorphismus (oder linear) von $V$ nach $W$ wenn gilt:
+\begin{itemize}
+	\item $\forall x,y\in V : f(x)+f(y) = f(x+y)$
+	\item $\forall x\in V, \lambda\in K: f(\lambda\cdot K)=\lambda\cdot f(x)$
+\end{itemize}
+\end{theorem}
+
+\newtheorem{theorem2}{Theorem}[section]
+\begin{theorem2}[Jede boolsche Funktion ist mit NANDs konstruierbar]
+	$\ldots$
+\end{theorem2}
+
+\subsection{Semihomomorphes Kryptosystem}
+Ein Semihomomorphes Kryptosystem erlaubt die Ausführung von Rechenoperationen im Chiffreraum ohne vorherige Verschlüsselung (!). (z.B. ElGamal für Multiplikation, Pailler für Addition). ElGamal stellt einen Ring mit Eins zur Verfügung\footnote{Laut, https://security.stackexchange.com/a/98190. Es gilt hierfür noch mehr Recherche zu betreiben, z.B. zu nichtkommutativer Kryptographie}, wobei der Chiffreraum dem Körper entspricht. 
+
+\subsubsection{Pailler Kryptosystem}
+\subsection{Voll Homomorphes Kryptosystem}
+Allows arbitrary computation on ciphertexts. (example: Gentry). It provides a ring structure (R,+,*) which allows to construct NAND gates. Since it is possible to create any boolean computation with NAND gates, a fully homomorphic cryptosystem allows to compute any arbitrary computation.
+\section{Sicherheitskriterien}
+\label{Sicherheitskriterien}
+\subsection{Malleability}
 Malleability beschreibt die Möglichkeit, dass ein Angreifer einen Chiffretext $c$ von Klartext $k$ geziehlt verformen kann um einen daraus abgeleiteten Chiffretext $f(c)=c'$ zu erzeugen welcher in einer ihm bekannten Beziehung $f$ zu $c$ steht. Existiert nun zwischen den Klartexten $k$ und $k'$ eine Beziehung die der Angreifer umkehren kann, kann er zu $k'$ den ursprünglichen Klartext $k$ bestimmten. \cite[p. 292]{smart2003}
 
 \textbf{Eigenschaften}: Ein malleable Kryptosystem ist angreifbar mit chosen ciphertext Angriffen. (CCA2)
 
 \textbf{Kommentar}: Das zwischen den Chiffretexten und den Klartexten eine ähnliche Beziehung steht die der Angreifer kennt ist eine Eigenschaft die genau Isomorphismen ermöglichen! Daher sind homomorphe Kryptosysteme per Design anfällig für malleability.
-\subsection*{Homomorphic Encryption}
 
+\subsection{Privacy-Preserving}
 
-\subsubsection*{Fully Homomorphic Encryption}
-Allows arbitrary computation on ciphertexts. (example: Gentry). It provides a ring structure (R,+,*) which allows to construct NAND gates. Since it is possible to create any boolean computation with NAND gates, a fully homomorphic cryptosystem allows to compute any arbitrary computation.
+\subsection{Sicherheitsklassen}
+\subsubsection {Ununterscheidbarkeit von Geheimtexten (Ciphertext Indistinguishability)}
+\subsubsection{Semantische Sicherheit}
+Ein deterministisches Kryptosytem wie in \ref{DKS} kann nie semantisch sicher sein!
 
-\subsubsection*{Semi-/Partial Homomorphic Enryption}
-Allows the homomorphic computation of some operations on ciphertexts (examples: ElGamal for multiplication, Pailler for addition). It can provide for example a Monoid (G,*,e) or an abelian group (G,+,e).\footnote{https://security.stackexchange.com/a/98190}
-\newpage
-
-\section*{Beispielkategorisierungen}
-\subsection*{Autocrypt} \cite{tople2013autocrypt}
+\section{Klassifikation Homomorpher Kryptosysteme}
+\subsection{Aufteilungen}
+\subsection{Autocrypt} \cite{tople2013autocrypt}
 Problemstellung: Server sind ständig durch Angriffe bedroht die bis hin zu ihrer kompletten Übernahme geraten können. Um Datendiebstahl und Vertraulichkeitsverletzungen vorzubeugen ist es ratsam nur mit verschlüsselten Datenbeständen zu arbeiten. Ein IT-System oder Programm so anzupassen, dass es auf verschlüsselten Daten korrekt arbeitet wollen die Wissenschaftler automatisieren indem sie die Arbeit der Programmtransformation mit einem Compiler abwickeln: Autocrypt.
 
 Der Server läuft als virtuelle Maschine und Inhalte werden außerhalb der unvertrauten VM auf einem keyserver verschlüsselt. Autocrypt bestimmt automatisch benötigte Verschlüsselungsdatentypen für die Variablen und konvertiert zwischen diesen im Programmablauf her durch einfügen von hypercalls. Die Verschlüsselungsdatentypen werden gewählt nach der Verknüpfung die sie zu Verfügung stellen. Wenn also im Ursprungscode Additionen von zwei Variablen durchgeführt werden, dann werden zunächst Paillerverschlüsselungsdatentypen erzeugt. Wird das Ergebnis allerdings später multipliziert, dann muss der Datentyp konvertiert werden zu einem Elgamalverschlüsselungsdatentyp.
@@ -76,7 +291,7 @@ Bei der Entwicklung von Autocrypt sollen alle Rechenoperationen privacy-preservi
 
 \textbf{Malleability}: Die Autotoren haben als Zielsetzung die unerlaubte Kenntnisnahme von Daten auf dem Server zu unterbinden. Eine Überprüfung der Integrität von Rechenoperationen der von Autocrypt konvertierten Programmbestandteile ist daher kein Fokus der Arbeit [p. 4].
 
-\subsection*{Machine Learning Classification over encrypted data} \cite{bost2015machine}
+\subsection{Machine Learning Classification over encrypted data} \cite{bost2015machine}
 Problemstellung: Es soll ein privacy-preserving Maschinenlernenverfahren erstellt werden, bei dem sowohl die zu klassifizierenden Daten als auch die Klassifiziererdesigns vertraulich bleiben. Es wird eine Bibliothek konstruiert, aus der Modular beliebige privacy-preserving Klassifizierer erstellt werden können.
 
 In einem ersten Ansatz wurde überlegt privacy-preserving mit Secure Multiparty Computation umzusetzen, welches sich jedoch als zu langsam herrausgestellt hat. Aus dem gleichen Grund wird auch auf den Einsatz von vollhomomorpher Verschlüsselung verzichtet. Es ist schneller mit für Klassifizierungsverfahren spezialisierten Protokollen zu arbeiten. 
@@ -84,7 +299,7 @@ In einem ersten Ansatz wurde überlegt privacy-preserving mit Secure Multiparty 
 Es wird wie in \cite{tople2013autocrypt} XOR mit Pailler simuliert. Zusätzlich wird ein privates Skalarprodukt auf Basis von Pailler berechnet.
 Gegeben seien die Vektoren $x=(x_1,\ldots,x_n)$ und $y=(y_1,\ldots,y_n)$  wobei alle Einträge Klartexte sind. Das mit pub Paillierverschlüsselte Skalarprodukt ist dann:
 \begin{equation}
-	Enc_{pub}(\left\langle x,y\right\rangle )=\prod_i Enc_{pub}(y_i)^{x_i} \text{ mod } N^2
+Enc_{pub}(\left\langle x,y\right\rangle )=\prod_i Enc_{pub}(y_i)^{x_i} \text{ mod } N^2
 \end{equation}
 
 Eine weitere Tatsache die im Paillerkryptosystem ausgenutzt wird ist der Klartextraum ungefähr $2^{1024}$ bit ist. Anstelle von lediglich Integern können Floatzahlen mit Pailler verschlüsselt werden, wenn man die IEEE 754 floating point Darstellung verwendet welche große Exponenten benötigt.
@@ -95,14 +310,54 @@ In dieser Arbeit wurde auch eine leveled vollhomomorphe Verschlüsselung (HELib)
 
 \textbf{Malleability}: Es werden die homomorphen Kryptosysteme ledglich zum Rechnen im Chiffreraum verwendet. Ein Angriff der Malleability ausnutzt wird nicht betrachtet. Dies ist nachvollziehbar, da hier ein deterministischer Algorithmus abgearbeitet wird.
 
-\subsection*{Privacy Preserving Matrix Factorization} \cite{nikolaenko2013privacy}
+\subsection{Privacy Preserving Matrix Factorization} \cite{nikolaenko2013privacy}
 Bei der Generierung von userspezifischen Empfehlungen anhand vorheriger Wahlen eines Users ist Matrizenfaktorisierung ein weit verbreitetes Verfahren. Um dieses privacy-preserving zu machen soll ein System designt werden, welches Empfehlung geben kann ohne die Userbewertungen zu lernen.
 
 Bei dem Design wird aus Performancegründen hash-ElGamal verwendet um verschlüsselte Wertungen zu maskieren für die Einheit, welche im Besitz des privaten Schlüssels ist. In dem Design bekommt das Recommendersystem (RecSys) vom User ein mit dem öffentlichen Schlüssel von Cryptoserviceprovider (CSP) verschlüsseltes Rating $c$. Damit der CSP dies Rating nicht aufdecken kann, addiert RecSys einen zufälligen Wert $\mu$ auf das Rating. CSP erhält $c'=c+\mu$.
 
 \textbf{Kategorisierungskriterien}: Es wurde hash-ElGamal verwendet wegen seiner schnelleren Performance gegenüber Paillier und seiner Additivität ($\rightarrow$ additiv-homomorph)
- 
+
 \textbf{Malleability}: Bei dem Design wird von einem honest-but-curious Angreifer ausgegangen. Also könnte RecSys aus Neugierde $\mu=0$ addieren und so CSP ermöglichen alle Userratings zu lernen. Im HBC-Modell dürfen RecSys und CSP jedoch nicht vom Protokoll abweichen und könnten daher nicht kooperativ diese Information abschöpfen, denn CSP weiß nicht, dass RecSys eine Nulladdition durchführt welches die Maskierung aufhebt.
+
+\subsection{Fingerprinting Protocol for Images Based on Additive Homomorphic Property} \cite{kuribayashi2005fingerprinting}
+
+\textbf{Kategorisierungskriterien:} 
+
+\textbf{Malleability:}
+
+\subsection{Privacy-Preserving Face Recognition} \cite{erkin2009privacy}
+
+
+\subsection{Efficient and Secure Comparison for On-Line Auctions}
+Ivan Damgard et al. stellen in \cite{damgaard2007efficient} ein neues additives Kryptosystem vor um schnelle vergleiche einer öffentlich bekannten Zahl $x$ und einer geheimen Zahl $m$ durchzuführen die auf einem Server und einem Hilfsserver verteilt ist. Bei der on-line Versteigerung steht $x$ für das momentane Höchstgebot, während $m$ für das private mögliche Höchstgebot steht. Sie haben dieses Kryptosystem für ihren Anwendungsfall designt, da sie einen möglichst kleinen Klartextraum haben wollen. Die Verwendung eines kleinen Klartextraums hat zum Vorteil, dass mit kleineren Exponenten gerechnet wodurch ihr Verfahren an Effizienz im Vergleich gegenüber anderen Ansätzen gewonnen hat. 
+
+In ihrem Vergleich $m\leq x$ ist letztere Zahl öffentlich, jedoch ist das Verfahren erweiter bar, das beide Eingabeparameter geheim sind. 
+
+\textbf{Kategorisierungskriterien:} additiv-homomorph, kleiner Klartextraum
+
+\textbf{Malleability:} Das vorgestellen Kryptosystems wurde nicht auf Malleability untersucht obwohl bösartige Anfragen mögliche währen, da von einem honest-but-curious Angreifermodell ausgegangen wird. Ein Teilnehmer kann somit falsche Höchstgebote abgeben, jedoch gewinnt man dadurch keinen Vorteil. Entweder wird man früher aus dem Gebotsverfahren geschmissen oder er kann nach dem Gebotsverfahren feststellen ob der Betreiber die Vergleiche inkorrekt durchgeführt hat.  
+
+\subsection{Secure Computation mit SMC oder HE}
+In den Studien \cite[p.420]{damgaard2007efficient} und \cite[p.2]{sadeghi2009efficient} wurden zwei Techniken identifiziert um Funktionen sicher zu berechnen: Secure Multi-Party Computation und Homomorphe Verschlüsselung. Dabei kommen beide Studien unabhängig voneinander zu den gleichen Schlüssen über die Vorzüge der jeweiligen Verfahren:
+\begin{itemize}
+\item SMC Vorteil: viel Kommunikation
+\item SMC Nachteil: geringe Runden- und Berechenkomplexität
+\item HE Vorteil: geringe Kommunikation
+\item HE Nachteil: hohe Runden- und Berechenkomplexität
+
+
+\end{itemize}
+
+\section{Zusammenfassung}
+\section{Ausblick}
+
+% Wichtig für eine sehr gute Note ist die Fähigkeit zur Bewertung der Kryptosysteme zu ihrer möglichen Umsetzung für Pseudonymisierungsverfahren.
+
+
+
+
+
+
 
 \begin{center}
 	\begin{tabular}{ | l | l | l | p{5cm} |}
@@ -118,19 +373,11 @@ Bei dem Design wird aus Performancegründen hash-ElGamal verwendet um verschlüs
 
 
 \newpage
-\subsection*{Struktur der Bachelorarbeit}
-1. Einleitung (Was ist das Ziel? Wieso brauchen wir diesen Survey?)\\
-2. Theoretische Grundlagen\\
-2.1 Homomorphe Verschlüsselung\\
-2.1.1 Semihomomorphe Verschlüsselung (verschiedene Vorstellen)\\
-2.1.2 Fullyhomomorphe Verschlüsselung\\
-2.2 Malleability\\
-2.3 Privacy-Preserving\\
-	2.4 Ununterscheidbarkeit von Geheimtexten (Ciphertext Indistinguishability)\\
-3. Klassifikation Homomorpher Verschlüsselung\\
-3.1 Aufteilungen\\
-3.2 Kategorisierung von Autocrypt...\\
-4. Zusammenfassung\\
+\section*{Was man noch ergänzen könnte...}
+\begin{itemize}
+	\item Zum deterministischen Kryptosystem \ref{DKS} kurz das Beispiel der Cäsarverschlüsselung erwähnen. Und weitere Recherche unter dem Begriff \enquote{deterministische Verschlüsselung}.
+\end{itemize}
+
 
 %--------------------------
 % BIBLIOGRAPHY
@@ -138,7 +385,7 @@ Bei dem Design wird aus Performancegründen hash-ElGamal verwendet um verschlüs
 \newpage
 
 \small
-\bibliographystyle{alpha}				% Name+Year instead of numbers
+\bibliographystyle{alpha}			% Name+Year instead of numbers
 \bibliography{Literaturverzeichnis}		% Literaturverzeichnis.bib
 
 \end{document}
