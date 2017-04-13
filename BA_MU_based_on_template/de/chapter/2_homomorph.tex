@@ -1,7 +1,8 @@
 \chapter{Homomorphe Kryptosysteme}
 
 \section{Schutzziele der Kryptografie}
-Die Kryptografie möchte mehrere Schutzziele für die Speicherung, Vervielfältigung und Übertragung von Informationen umsetzen und dazu verschiedene Verfahren bereitstellen. Grundlegende Schutzziele beim Übertragen von Informationen zwischen mehreren Personen mit Nachrichten sind dann \cite{mm2015itsec}\cite[p.2]{delfs2002introduction}:
+Die Kryptografie möchte mehrere Schutzziele für die Speicherung, Vervielfältigung und Übertragung von Informationen umsetzen und dazu verschiedene Verfahren bereitstellen. Grundlegende Schutzziele beim Übertragen von Informationen zwischen mehreren Personen mit Nachrichten sind dann \cite[p.2]{delfs2002introduction}:
+%\cite{mm2015itsec}
 \begin{enumerate}
 	\item \textbf{Vertraulichkeit:} Keine unauthorisierte Kenntnisnahme. Nur dazu berechtigte Personen sollen eine Information lesen können oder Zugang zur einer Information bekommen.
 	\item \textbf{Integrität:} Keine unauthorisierte unbemerkte  Datenmanipulation. Dies schützt insbesondere vor dem Hinterlegen von Falschdaten in einer Nachricht oder einer oder dem Fehlen von Teilen einer Nachricht.
@@ -70,14 +71,19 @@ Das Konzept eines Proballistischen Kryptosystems wurde ursprünglich von Goldwas
 	\end{itemize}
 \end{theorem}
 
-Ein Proballistisches Kryptosystem benutzt also Zufall in der Verschlüsselungs-funktion, so dass der gleiche Klartext verschieden verschlüsselt wird. Mit Proballistischen Kryptosystemen werden meistens Asymmetrische Verschlüsselungs-verfahren gemeint, es ist jedoch auch möglich mit Symmetrischen Verschlüsselungs-verfahren diese Eigenschaft zu erreichen, z.B. bei Verwendung von Blockchiffren im Cipher Block Chaining Mode. Die Menge der Zufallszahlen $\mathcal{R}$ entspricht dann der Menge möglicher Initialisierungsvektoren \cite{mm2015itsec}. 
+Ein Proballistisches Kryptosystem benutzt also Zufall in der Verschlüsselungs-funktion, so dass der gleiche Klartext verschieden verschlüsselt wird. Mit Proballistischen Kryptosystemen werden meistens Asymmetrische Verschlüsselungs-verfahren gemeint, es ist jedoch auch möglich mit Symmetrischen Verschlüsselungs-verfahren diese Eigenschaft zu erreichen, z.B. bei Verwendung von Blockchiffren im Cipher Block Chaining Mode. Die Menge der Zufallszahlen $\mathcal{R}$ entspricht dann der Menge möglicher Initialisierungsvektoren. 
+%\cite{mm2015itsec}. 
 
 
 
 
 \subsubsection{Homomorphes Kryptosystem}
 
+\subsubsection{Stufenfixes Homomorphes Kryptosystem}
+\label{LHE}
+
 \subsection{Mathematische Grundlagen}
+\label{MG}
 
 Wir werden später Homomorphe Kryptosystem im Detail einführen. Um ihre Anwendung zu verstehen, ist es jedoch nötig folgende Algebraische Strukturen nach \cite{tr2015la} einzuführen um ein Verständnis dafür zu schaffen wie Homomorphe Kryptosysteme verwendet werden könnnen.
 

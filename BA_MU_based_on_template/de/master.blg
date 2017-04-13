@@ -8,52 +8,48 @@ Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: bibliography.bib
-Database file #2: tpl/rfc.bib
 Warning--to sort, need author or key in Cryptosy29:online
 Warning--empty pages in bost2015machine
 Warning--empty year in Cryptosy29:online
-Warning--empty chapter in tr2015la
-You can't pop an empty literal stack for entry tr2015la
-while executing---line 2205 of file alphadin.bst
-You've used 13 entries,
+You've used 18 entries,
             4793 wiz_defined-function locations,
-            965 strings with 8190 characters,
-and the built_in function-call counts, 8412 in all, are:
-= -- 908
-> -- 248
-< -- 290
-+ -- 332
-- -- 91
-* -- 540
-:= -- 1483
-add.period$ -- 15
-call.type$ -- 13
-change.case$ -- 70
-chr.to.int$ -- 13
-cite$ -- 18
-duplicate$ -- 230
-empty$ -- 530
-format.name$ -- 163
-if$ -- 1606
+            993 strings with 9282 characters,
+and the built_in function-call counts, 12744 in all, are:
+= -- 1418
+> -- 399
+< -- 429
++ -- 505
+- -- 147
+* -- 850
+:= -- 2246
+add.period$ -- 18
+call.type$ -- 18
+change.case$ -- 104
+chr.to.int$ -- 18
+cite$ -- 22
+duplicate$ -- 328
+empty$ -- 769
+format.name$ -- 259
+if$ -- 2446
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 35
-newline$ -- 78
-num.names$ -- 36
-pop$ -- 100
+missing$ -- 54
+newline$ -- 101
+num.names$ -- 51
+pop$ -- 124
 preamble$ -- 1
-purify$ -- 96
+purify$ -- 140
 quote$ -- 0
-skip$ -- 460
+skip$ -- 691
 stack$ -- 0
-substring$ -- 575
-swap$ -- 58
-text.length$ -- 44
-text.prefix$ -- 4
+substring$ -- 899
+swap$ -- 87
+text.length$ -- 67
+text.prefix$ -- 3
 top$ -- 0
-type$ -- 110
-warning$ -- 4
-while$ -- 75
-width$ -- 15
-write$ -- 170
-(There was 1 error message)
+type$ -- 168
+warning$ -- 3
+while$ -- 122
+width$ -- 20
+write$ -- 236
+(There were 3 warnings)

@@ -8,6 +8,18 @@
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
+\bibitem[BLLN13]{bos2013improved}
+\textsc{Bos}, Joppe~W. ; \textsc{Lauter}, Kristin~E. ; \textsc{Loftus}, Jake  ;
+  \textsc{Naehrig}, Michael:
+\newblock Improved Security for a Ring-Based Fully Homomorphic Encryption
+  Scheme.
+\newblock {In: }\emph{IMA Int. Conf.} Springer, 2013, S. 45--64
+
+\bibitem[BLN14]{bos2014private}
+\textsc{Bos}, Joppe~W. ; \textsc{Lauter}, Kristin  ; \textsc{Naehrig}, Michael:
+\newblock Private predictive analysis on encrypted medical data.
+\newblock {In: }\emph{Journal of biomedical informatics} 50 (2014), S. 234--243
+
 \bibitem[BPTG15]{bost2015machine}
 \textsc{Bost}, Raphael ; \textsc{Popa}, Raluca~A. ; \textsc{Tu}, Stephen  ;
   \textsc{Goldwasser}, Shafi:
@@ -26,10 +38,30 @@
 \newblock {In: }\emph{Australasian Conference on Information Security and
   Privacy} Springer, 2007, S. 416--430
 
+\bibitem[DJ01]{damgaard2001generalisation}
+\textsc{Damg{\aa}rd}, Ivan ; \textsc{Jurik}, Mads:
+\newblock A generalisation, a simpli. cation and some applications of
+  paillier's probabilistic public-key system.
+\newblock {In: }\emph{International Workshop on Public Key Cryptography}
+  Springer, 2001, S. 119--136
+
 \bibitem[DKK02]{delfs2002introduction}
 \textsc{Delfs}, Hans ; \textsc{Knebl}, Helmut  ; \textsc{Knebl}, Helmut:
 \newblock \emph{Introduction to cryptography}. Bd.~2.
 \newblock Springer, 2002
+
+\bibitem[EFG{\etalchar{+}}09]{erkin2009privacy}
+\textsc{Erkin}, Zekeriya ; \textsc{Franz}, Martin ; \textsc{Guajardo}, Jorge ;
+  \textsc{Katzenbeisser}, Stefan ; \textsc{Lagendijk}, Inald  ; \textsc{Toft},
+  Tomas:
+\newblock Privacy-preserving face recognition.
+\newblock {In: }\emph{International Symposium on Privacy Enhancing Technologies
+  Symposium} Springer, 2009, S. 235--253
+
+\bibitem[Fis11]{tr2015la}
+\textsc{Fischer}, Gerd:
+\newblock Lernbuch Lineare Algebra und Analytische Geometrie.
+\newblock {In: }\emph{Vieweg+ Teubner, Wiesbaden}  (2011)
 
 \bibitem[GM84]{goldwasser1984probabilistic}
 \textsc{Goldwasser}, Shafi ; \textsc{Micali}, Silvio:
@@ -44,12 +76,6 @@
 \newblock {In: }\emph{IEEE Transactions on Image Processing} 14 (2005), Nr. 12,
   S. 2129--2139
 
-\bibitem[Mei16]{mm2015itsec}
-\emph{Kapitel\/}  2. Grundlegendes.
-\newblock \,{In:\,}\textsc{Meier}, Prof. Dr.~M.:
-\newblock \emph{Vorlesung IT-Sicherheit}.
-\newblock WS2015/16
-
 \bibitem[NIW{\etalchar{+}}13]{nikolaenko2013privacy}
 \textsc{Nikolaenko}, Valeria ; \textsc{Ioannidis}, Stratis ;
   \textsc{Weinsberg}, Udi ; \textsc{Joye}, Marc ; \textsc{Taft}, Nina  ;
@@ -58,11 +84,18 @@
 \newblock {In: }\emph{Proceedings of the 2013 ACM SIGSAC conference on Computer
   \& communications security} ACM, 2013, S. 801--812
 
-\bibitem[Rä15]{tr2015la}
+\bibitem[NLV11]{naehrig2011can}
+\textsc{Naehrig}, Michael ; \textsc{Lauter}, Kristin  ;
+  \textsc{Vaikuntanathan}, Vinod:
+\newblock Can homomorphic encryption be practical?
+\newblock {In: }\emph{Proceedings of the 3rd ACM workshop on Cloud computing
+  security workshop} ACM, 2011, S. 113--124
 
-\newblock \,{In:\,}\textsc{Räsch}, Prof. Dr.~T.:
-\newblock \emph{Vorlesung Lineare Algebra}.
-\newblock SS2015
+\bibitem[OU98]{okamoto1998new}
+\textsc{Okamoto}, Tatsuaki ; \textsc{Uchiyama}, Shigenori:
+\newblock A new public-key cryptosystem as secure as factoring.
+\newblock {In: }\emph{Advances in Cryptology—EUROCRYPT'98}  (1998), S.
+  308--318
 
 \bibitem[Sma03]{smart2003}
 \textsc{Smart}, Nigel~P.:
