@@ -1,0 +1,38 @@
+\chapter{Sicherheitskriterien}
+\label{SK}
+\section{Malleability} \label{malleability}
+Malleability beschreibt die Möglichkeit, dass ein Angreifer einen Chiffretext $c$ von Klartext $k$ geziehlt verformen kann um einen daraus abgeleiteten Chiffretext $f(c)=c'$ zu erzeugen welcher in einer ihm bekannten Beziehung $f$ zu $c$ steht. Existiert nun zwischen den Klartexten $k$ und $k'$ eine Beziehung die der Angreifer umkehren kann, kann er zu $k'$ den ursprünglichen Klartext $k$ bestimmten. \cite[p. 292]{smart2003}
+
+\textbf{Eigenschaften}: Ein malleable Kryptosystem ist angreifbar mit chosen ciphertext Angriffen. (CCA2)
+
+\textbf{Kommentar}: Das zwischen den Chiffretexten und den Klartexten eine ähnliche Beziehung steht die der Angreifer kennt ist eine Eigenschaft die genau Isomorphismen ermöglichen! Daher sind homomorphe Kryptosysteme per Design anfällig für malleability.
+
+\section{Privacy-Preserving}
+
+\section{Sicherheitsklassen}
+\label{Sicherheitsklassen}
+\subsection {Ununterscheidbarkeit von Geheimtexten (Ciphertext Indistinguishability)}
+\subsection{Semantische Sicherheit}
+Ein deterministisches Kryptosytem wie in \ref{DKS} kann nie semantisch sicher sein! [p.380]\cite{katz2014introduction}
+
+
+
+Ciphertext expansion
+
+\section{provable security}
+uses reduction
+%https://en.wikipedia.org/wiki/Provable_security
+
+\section{???}
+Außer dem One-Time Pad wurde kein anderes Kryptosystem als unconditioneal secure bewiesen. Daher betrachtet man bei der Sicherheit immer die Rechenkapazitäten des Angreifers
+
+\section{Attack Model}
+chosen-plaintext IND-CPA
+nonapdaptive chosen chiphertext IND-CCA1
+adaptive chosen ciphertext IND-CCA2 (implies nonmalleability)
+IND stands for indistinguishability
+In asyymetrischen Verfahren kann jeder beliebige plaintexte verschüssel. Daher gegenüber asyymetrische Verfahren der Angreifer immer Fähigkeit eines chosen-plaintext Angriffs
+
+semantic security [34] in homo for non-experts
+polynomial security (= indestinguishability) [36]
+semantic security and polynomial security are equivalent! [34]

@@ -1,0 +1,75 @@
+This Document states how important the assignements from the Assignment Sheets are for the exam for the lecture Artificial Intelligence for the summer term 2013.
+
+Note: ! means important for the exam
+
+1-6) difference between strong and weak AL 
+7) Formular should be known
+8) !
+9) Not important
+10) ! (maybe)
+11) not important
+12) !
+13) !
+14) !
+15) !
+16) Gliders !, usually direction is given, don´t forget timesteps
+17) !
+18) maybe know pattern
+19) r and p pentomine, complex + gliders
+20) definitly not
+21) definitly not
+22) probably not, wasnt in exams before
+23) yes
+24) yes
+25) yes
+26) no
+27) wasnt in exam before, but wouldnt exclude
+28) !, was in 50% of the exams
+29) !, was in exam before
+30) maybe
+31) no drawing, be able to explain CRL and Langtons Loop and difference between them
+32) was in exam before
+33) no, question about syntax might be in exam, but is probably not
+34) usually not
+35) yes
+36) know formular
+37) no
+38) calculation likely not in exam, but one shoukd know the result
+39) yes
+40) probably not, but might be a 12 point assignment
+41) yes, was in exam before
+42) will most likely not be in the exam, wasnt before. forumlar: L²-L+2 = Z
+43) FAVOURITE, definitly learn this one!
+44) state, but not formular
+45) first two points together
+46) yes, label diagram, usually my + lambda, do not start with zero
+47) probably not
+48) maybe, histogram
+49) maybe
+50) really important! might give 12 or 15 points
+51) maybe formular, 50%
+52) !, easy
+53) might come up in combination with 51
+54) yes
+55) yes
+56) no, but one should know that there are function which are really naste for gradient descent
+57) might be in exam, dont forget to label diagram
+58) yes
+59) don't think it will be in exam, but might be
+60) some braitenberg sensor will be asked about
+61) yes
+62) yes
+63) maybe
+64) [no was the question about our points]
+65) yes, 1d->2d movement
+66) not that important, 3c (sensor of 2a, 2b, 3a, 3b)
+67) good exam assignment, was in exam last year
+68) not really important
+69) yes
+70) no
+71) yes
+72) no
+73) yes
+74) don't think so
+
+On a related note, good luck ;)

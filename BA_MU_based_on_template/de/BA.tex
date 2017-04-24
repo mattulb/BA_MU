@@ -1,0 +1,70 @@
+\documentclass[9.5pt,a4paper,openright,bibtotocnumbered,headinclude,cleardoublepage=plain]{scrreprt}
+\usepackage[utf8]{inputenc}
+\input{cfg.tex}
+\input{tpl/pkg.tex}
+\begin{document}
+% ------------------------------------------------------------------------- Init
+\sloppy
+\KOMAoptions{twoside = false}
+\input{tpl/titlepage.tex}
+\ifthenelse{\equal{\thesisprintingstyle}{twoside}}{
+	\KOMAoptions{twoside = true}
+	\cleardoublepage
+}{}
+\pagestyle{scrheadings}
+\setcounter{page}{7}
+\pagenumbering{gobble}
+\pagenumbering{roman}
+
+% ----------------------------------------------------------------------- Thanks
+\ifthenelse{\equal{\thesisthankyou}{true}}{
+	\cleardoublepage
+	\chapter*{\ifthenelse{\equal{\thesislanguage}{german}}%
+		{Danksagung}%
+		{Acknowledgement}}
+	\input{chapter/thanks.tex}}
+	\cleardoublepage
+{}%
+
+% ------------------------------------------------------------------ Declaration
+\ifthenelse{\equal{\thesisprintdeclaration}{true}}{%
+\input{tpl/declaration.tex}
+\cleardoublepage 
+}{}%
+
+% --------------------------------------------------------------------- Abstract
+\cleardoublepage
+\chapter*{\ifthenelse{\equal{\thesislanguage}{german}}%
+	{Zusammenfassung}%
+	{Abstract}}
+\input{chapter/abstract.tex}
+\clearpage
+%\vspace*{\fill}
+%\thispagestyle{empty}
+
+% ----------------------------------------------------------------------- Tables
+\addtocontents{toc}{\vskip -2em}
+\addtocontents{lof}{\vskip -2em}
+\addtocontents{lot}{\vskip -2em}
+\begingroup
+\let\clearpage\relax
+\tableofcontents
+\iftotalfigures\listoffigures\fi
+\iftotaltables\listoftables\fi
+\iftotallstlistings\lstlistoflistings\fi
+\endgroup
+\cleardoublepage
+\pagenumbering{arabic}
+
+
+%\setcounter{page}{1}
+% ------------------------------------------------------------ Add Chapters here
+\input{chapter/index.tex}
+%\input{your/chapter/here.tex}
+
+\bibliographystyle{alphadin}
+% ---------------------------------------------------------- Add .bib files here
+%\bibliography{bibliography,tpl/rfc}
+\bibliography{bib}
+
+\end{document}

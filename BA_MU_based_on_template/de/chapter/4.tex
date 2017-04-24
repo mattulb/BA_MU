@@ -1,0 +1,185 @@
+\chapter{Klassifikation Homomorpher Kryptosysteme}
+\label{KHK}
+\section{Aufteilungen}
+\section{Autocrypt} \cite{tople2013autocrypt}
+\label{autocrypt}
+Problemstellung: Server sind ständig durch Angriffe bedroht die bis hin zu ihrer kompletten Übernahme geraten können. Um Datendiebstahl und Vertraulichkeitsverletzungen vorzubeugen ist es ratsam nur mit verschlüsselten Datenbeständen zu arbeiten. Ein IT-System oder Programm so anzupassen, dass es auf verschlüsselten Daten korrekt arbeitet wollen die Wissenschaftler automatisieren indem sie die Arbeit der Programmtransformation mit einem Compiler abwickeln: Autocrypt.
+
+Der Server läuft als virtuelle Maschine und Inhalte werden außerhalb der unvertrauten VM auf einem keyserver verschlüsselt. Autocrypt bestimmt automatisch benötigte Verschlüsselungsdatentypen für die Variablen und konvertiert zwischen diesen im Programmablauf her durch einfügen von hypercalls. Die Verschlüsselungsdatentypen werden gewählt nach der Verknüpfung die sie zu Verfügung stellen. Wenn also im Ursprungscode Additionen von zwei Variablen durchgeführt werden, dann werden zunächst Paillerverschlüsselungsdatentypen erzeugt. Wird das Ergebnis allerdings später multipliziert, dann muss der Datentyp konvertiert werden zu einem Elgamalverschlüsselungsdatentyp.
+
+Bei der Entwicklung von Autocrypt sollen alle Rechenoperationen privacy-preserving sein. Als Transformationstool ist eine Integrität der Daten auf denen gerechnet wird daher nicht berücksichtigt worden.
+
+\textbf{Kategorisierungskriterien}: Pailler wurde wegen seiner Homomorphie und Additionsverknüpfung verwendet ($\rightarrow$ additiv-homomorph). Analoges Argument für Elgamal. Zwischen diesen beiden Verfahren wird hin und her konvertiert, da dies schneller ist als \textit{ein} vollhomomorphes Verfahren ($\rightarrow$ Klasse schneller Verfahren). Weiter ist Pailler flexibel einsetzbar für die Addition von Zahlen byteweiese oder bitweise. Letzteres ermöglicht die Konstrution eines homomorphen XOR Operators. ($\rightarrow$ homomorph XOR)
+
+\textbf{Malleability}: Die Autotoren haben als Zielsetzung die unerlaubte Kenntnisnahme von Daten auf dem Server zu unterbinden. Eine Überprüfung der Integrität von Rechenoperationen der von Autocrypt konvertierten Programmbestandteile ist daher kein Fokus der Arbeit [p. 4].
+
+\section{Machine Learning Classification over encrypted data}
+\label{ML}
+ \cite{bost2015machine}
+Problemstellung: Es soll ein privacy-preserving Maschinenlernenverfahren erstellt werden, bei dem sowohl die zu klassifizierenden Daten als auch die Klassifiziererdesigns vertraulich bleiben. Es wird eine Bibliothek konstruiert, aus der Modular beliebige privacy-preserving Klassifizierer erstellt werden können.
+
+In einem ersten Ansatz wurde überlegt privacy-preserving mit Secure Multiparty Computation umzusetzen, welches sich jedoch als zu langsam herrausgestellt hat. Aus dem gleichen Grund wird auch auf den Einsatz von vollhomomorpher Verschlüsselung verzichtet. Es ist schneller mit für Klassifizierungsverfahren spezialisierten Protokollen zu arbeiten. 
+
+Es wird wie in \cite{tople2013autocrypt} XOR mit Pailler simuliert. Zusätzlich wird ein privates Skalarprodukt auf Basis von Pailler berechnet.
+Gegeben seien die Vektoren $x=(x_1,\ldots,x_n)$ und $y=(y_1,\ldots,y_n)$  wobei alle Einträge Klartexte sind. Das mit pub Paillierverschlüsselte Skalarprodukt ist dann:
+\begin{equation}
+Enc_{pub}(\left\langle x,y\right\rangle )=\prod_i Enc_{pub}(y_i)^{x_i} \text{ mod } N^2
+\end{equation}
+
+noch auszuführen
+
+Eine weitere Tatsache die im Paillerkryptosystem ausgenutzt wird ist der Klartextraum ungefähr $2^{1024}$ bit ist. Anstelle von lediglich Integern können Floatzahlen mit Pailler verschlüsselt werden, wenn man die IEEE 754 floating point Darstellung verwendet welche große Exponenten benötigt.
+
+In dieser Arbeit wurde auch eine leveled vollhomomorphe Verschlüsselung (HELib) verwendet, jedoch der Umfang und die Gründe dafür bleiben ohne nähere Erläuterung [p. 4].
+
+\textbf{Kategorisierungskriterien}: Es wurden die Kryptosysteme von Paillier und Goldwasser–Micali verwendet. Beide Aufgrund ihrer schnelleren Performance und der mathematischen Verknüpfung sie anbieten. ($\rightarrow$ additiv-homomorph) ($\rightarrow$ xor-homomorph). Analog zur unverschlüsselten Konstruktion von Gleitkommazahlen aus ganzen Zahlen kann mit  Pailler ein Operator für die homomorphe Addition von Gleitkommazahlen konstruiert werden. ($\rightarrow$ floatingpoint-additiv-homomorph)
+
+\textbf{Malleability}: Es werden die homomorphen Kryptosysteme ledglich zum Rechnen im Chiffreraum verwendet. Ein Angriff der Malleability ausnutzt wird nicht betrachtet. Dies ist nachvollziehbar, da hier ein deterministischer Algorithmus abgearbeitet wird.
+
+\section{Privacy Preserving Matrix Factorization} \cite{nikolaenko2013privacy}
+Bei der Generierung von userspezifischen Empfehlungen anhand vorheriger Wahlen eines Users ist Matrizenfaktorisierung ein weit verbreitetes Verfahren. Um dieses privacy-preserving zu machen soll ein System designt werden, welches Empfehlung geben kann ohne die Userbewertungen zu lernen.
+
+Bei dem Design wird aus Performancegründen hash-ElGamal verwendet um verschlüsselte Wertungen zu maskieren für die Einheit, welche im Besitz des privaten Schlüssels ist. In dem Design bekommt das Recommendersystem (RecSys) vom User ein mit dem öffentlichen Schlüssel von Cryptoserviceprovider (CSP) verschlüsseltes Rating $c$. Damit der CSP dies Rating nicht aufdecken kann, addiert RecSys einen zufälligen Wert $\mu$ auf das Rating. CSP erhält $c'=c+\mu$.
+
+\textbf{Kategorisierungskriterien}: Es wurde hash-ElGamal verwendet wegen seiner schnelleren Performance gegenüber Paillier und seiner Additivität ($\rightarrow$ additiv-homomorph)
+
+\textbf{Malleability}: Bei dem Design wird von einem honest-but-curious Angreifer ausgegangen. Also könnte RecSys aus Neugierde $\mu=0$ addieren und so CSP ermöglichen alle Userratings zu lernen. Im HBC-Modell dürfen RecSys und CSP jedoch nicht vom Protokoll abweichen und könnten daher nicht kooperativ diese Information abschöpfen, denn CSP weiß nicht, dass RecSys eine Nulladdition durchführt welches die Maskierung aufhebt.
+
+\section{Efficient and Secure Comparison for On-Line Auctions}
+\label{dgk}
+Ivan Damgard et al. stellen in \cite{damgaard2007efficient} ein neues additives Kryptosystem DGK vor um schnelle vergleiche einer öffentlich bekannten Zahl $x$ und einer bitweise (vgl. \ref{PAMD}) verschlüsselten Zahl $m$ durchzuführen die auf einem Server und einem Hilfsserver verteilt ist. Bei der online Versteigerung steht $x$ für das momentane Höchstgebot, während $m$ für das private mögliche Höchstgebot steht. Sie haben dieses Kryptosystem für ihren Anwendungsfall designt, da sie einen möglichst kleinen Klartextraum haben wollen. Die Verwendung eines kleinen Klartextraums hat zum Vorteil, dass mit kleineren Exponenten gerechnet wodurch ihr Verfahren an Effizienz im Vergleich gegenüber anderen Ansätzen gewonnen hat. 
+
+In ihrem Vergleich $m\leq x$ ist letztere Zahl öffentlich, jedoch ist das Verfahren erweiterbar, so das beide Eingabeparameter privat sind. Ein auf ihrem Verfahren basierender Vergleich von zwei privater Zahlen wird in \ref{PPFR} vorgestellt.
+
+\textbf{Kategorisierungskriterien:} additiv-homomorph, kleiner Klartextraum
+
+\textbf{Malleability:} Das vorgestellen Kryptosystems wurde nicht auf Malleability untersucht obwohl bösartige Anfragen möglich währen, da von einem honest-but-curious Angreifermodell ausgegangen wird. Ein Teilnehmer kann somit falsche Höchstgebote abgeben, jedoch gewinnt man dadurch keinen Vorteil. Entweder wird man früher aus dem Gebotsverfahren geschmissen oder er kann nach dem Gebotsverfahren feststellen ob der Betreiber die Vergleiche inkorrekt durchgeführt hat.  
+
+\section{Fingerprinting Protocol for Images Based on Additive Homomorphic Property}
+\cite{kuribayashi2005fingerprinting}
+Das vorgestellte Protocol wurde unter dem Hintergrund eingeführt, da bisher bekannte Lösungen entweder eine zu langsame Verschlüsselungsrate hatten oder das Einsetzen des Wasserzeichens zu aufwendig ist. Es wird ein homomorphes public-key Kryptosystem eingesetzt um asymmetrische Fingerprints zu erzeugen. Dies ist notwendig, da bei symmetrischen Fingerprinting der Verkäufer ein benutzerspezifisches Wasserzeichen erzeugen kann und somit auch einen rechtmäßigen Käufer eine Raubkopie unterstellen könnte.
+
+Obwohl das Protocol mit Pailler umgesetzt werden könnte, hat man sich für das Kryptosystem von Okamoto-Uchiyama \cite{okamoto1998new} entschieden, da weniger Rechenoperationen durchgeführt werden müssen [p.2132].
+
+Die Asymmetrie und Homomorphie vom Okamoto-Uchiyama Kryptosystem wird wie folgt beim Fingerprinting ausgenutzt:
+
+\begin{enumerate}
+	\item Der Käufer erzeugt einen Fingerabruck, verschlüsselt ihn mit seinem öffentlichen Schlüssel, und sendet ihn an den Verkäufer. Mit einem Zero-Knowledge-Proof wird dem Verkäufer nachgewiesen, dass das Chiffrat tatsächlich einen nutzerspezifischen Fingerabdruck enthält.
+	\item Nun verschlüsselt der Verkäufer sei digitales Bild unter dem gleichen öffentlichen Schlüssel wie der Käufer und bettet den Fingerabruck durch homomorphe Verknüpfung ein.
+	\item Der Käufer entschlüsselt das Bild mit dem Wasserzeichen ohne jedoch in der Lage zu sein das Wasserzeichen zu entfernen, da ihm nicht bekannt ist in welchen Positionen oder Frequenzbereichen (bei Anwendung des Wasserzeichens im Frequenzraum unter diskreter Kosinustransformation) das Wasserzeichen das ursprüngliche Bild verändert hat.
+\end{enumerate}
+
+Weiter gewährleistet die semantische Sicherheit von Okamoto-Uchiyama anonymes Kaufen [p.2134], d.h. der Verkäufer ist nicht in der Lage die Identität des Käufers aufzudecken.
+
+\textbf{Kategorisierungskriterien:} additiv-homomorph, semantisch-sicher
+
+\textbf{Malleability:} Die Autoren sind sich bewusst der Mlleability des verwendeten Kryptosystems, ohne jedoch mögliche Angriffe zu untersuchen. Der Hauptfokus des Sicherheitsbegriffs liegt in der Unmöglichkeit des Käufers, das Wasserzeichen zu entfernen und für den Verkäufer, nicht in der Lage zu sein die Identität des Käufers zu aufzudecken.
+
+\section{Privacy Preserving Face Recognition}
+\label{PPFR}
+Das Team um Zekeriya Erkin et al. \cite{erkin2009privacy} stellt ein originelles privacy-preserving Gesichtserkennungssystem vor bei dem sowohl die Eingabebilder als auch das Ergebnis ihrer Analyse vom Server verdeckt bleiben. Der Analyse zugrunde liegt ein Eigenfacesalgorithmus, welcher auf verschlüsselten Bildern arbeitet. Eingesetzt werden die Kryptosysteme Paillier und DKG \cite{damgaard2007efficient} welches auch in \ref{dgk} zum Einsatz kommt. Sie wählen die Basis $g$ des öffentlichen Schlüssel als $g=n+1$, welches die Verschlüsslung beschleunigt [p.237]\cite{damgaard2001generalisation}. DKG wird lediglich auch Effizienzgründen anstelle von Paillier eingesetzt. Der Klartextraum im implementierten DKG ist kleiner. Da die Exponenten kleiner sind, ist die Verschlüsselung effizienter.
+
+Da die Verfahren nur mit Integers arbeiten, werden Featurevektoren des Gesichtserkennungssytem diskretisiert in dem auf den nächsten Integer gerundet wird.
+
+Rechenoperationen im Chiffreraum im privaten Gesichtserkennungssystem: Wann immer die eckigen Klammern auftauchen, ist ein Element verschlüsselt unter dem öffentlichen Schlüssel von Alice, welche ein Gesicht analysieren möchte. Sie übergibt dieses Gesicht verschlüsselt Bob, der dank homomorpher Kryptographie in der Lage ist die Analyse durchzuführen ohne das Gesicht direkt zu sehen.
+
+\begin{itemize} 
+\item \textit{Projektion} des verschlüsselten Eingabebilds $\Gamma$ auf die Basis von Eigenfacevektoren $u_1,\ldots,u_K$. Hier zu wird mit der gleichen Technik wie in \ref{ML} ein Skalarprodukt durch Potenzieren berechnet. Das Ergebnis ist ein verschlüsselter Featurevektor des Eingabebildes  $\llbracket\overline\Omega\rrbracket$.
+\item \textit{Abstand} $D$ von Featurevektoren $\{\Omega_1,\ldots,\Omega_M\}$ der Datenbank des Servers zum Featurevektor des Eingabebildes $\llbracket\overline\Omega\rrbracket$. Da man nur an der relativen Ordnung der Abstände interessiert ist, genügt der Vergleich der quadierten Abstände:
+\begin{equation*}
+\begin{aligned}
+D(\Omega,\overline\Omega)
+&=
+\|\Omega-\overline\Omega\|^2=(\omega_1-\overline\omega_1)^2+\ldots+(\omega_K-\overline\omega_K)^2\\
+&=
+\underbrace{\sum_{i=1}^{K}\omega_{i}^2}_{S_1}+
+\underbrace{\sum_{i=1}^{K}(-2\omega_i\overline\omega_i)}_{S_2}+
+\underbrace{\sum_{i=1}^{K}\overline\omega_{i}^2}_{S_3}
+\end{aligned}
+\end{equation*}
+
+Da Bob den Server betreibt, kennt er die Komponenten $\omega_i$ der Featurevektoren in der Datenbank und kann $S_1$ direkt berechnen. Da er die Komponenten $\overline\omega_i$ des Featurevektor vom Eingabebild nur verschlüsselt vorliegen hat, muss er $S_2$ analog wie beim Skalarprodukt in \ref{ML} durch potenzieren berechnen. Letzendlich kann Bob $S_3$ nur in Kooperation mit Alice berechnen, da bei beide Faktoren des Produkts ihm unbekannt sind. Dazu maskiert er die Komponenten des Featurevektors mit gleichverteilten Zufallswerten $r_i$:
+\begin{equation*}
+\llbracket x_i \rrbracket = \llbracket\overline\omega_i+r_i\rrbracket
+\end{equation*}
+Diese maskierten Komponenten sendet er an Alice, welche diese mit ihrem privaten Schlüssel entschlüsselt und quadiert, das Ergebnis $S_{3}^{'}=\sum_{j=1}^{K} x_{i}^2$ wieder verschlüsselt und dann an Bob zurücksendet. Bob erhält dann $S_3$ durch:
+
+\begin{equation*}
+\llbracket S_3 \rrbracket = \llbracket S_{3}^{'} \rrbracket \cdot \prod_{j=1}^{K}
+\left(\llbracket\overline\omega_i \rrbracket^{(-2r_i)}\cdot\llbracket-r_{i}^{2}\rrbracket\right)
+\end{equation*}
+
+Was korrekt ist, da die i-te Komponente sich ergibt aus:
+
+\begin{equation*}
+\llbracket x_i^2 \rrbracket\cdot\llbracket\overline\omega_i\rrbracket^{(-2r_i)}\cdot\llbracket-r_i^2\rrbracket =
+\llbracket (\overline\omega_i+r_i)^2-2r_i\overline\omega_i - r_i^2 \rrbracket = \llbracket\overline\omega_i^2 \rrbracket 
+\end{equation*}
+
+\item \textit{Vergleichen} zweier privater Zahlen im DGK Kryptosystem. Gegeben seien zwei bitweise verschlüsselte Zahlen $\llbracket d \rrbracket$ und $\llbracket r \rrbracket$. Alice generiert das Schlüsselpaar unter DGK und sendet den öffentlichen Schlüssel, sowie die ihre verschlüsselten Bits $\llbracket d_{l-1} \rrbracket,\ldots,\llbracket d_0 \rrbracket$ zu Bob. Bob berechnet dann:
+
+\begin{equation*}
+\llbracket c_i \rrbracket = \llbracket d_i-r_i-1+3\sum_{j=i+1}^{l-1} d_j\oplus r_j \rrbracket = 
+\llbracket d_i \rrbracket \cdot \llbracket -r_i \rrbracket \cdot \llbracket 1 \rrbracket \cdot \left(\sum_{j=i+1}^{l-1} \llbracket d_j\oplus r_j \rrbracket \right)^3
+\end{equation*}
+
+Diese Formel hat die Eigenschaft: \textit{alle} $c_i$ sind ungleich Null genau dann, wenn $d$ die größere der beiden Zahlen ist. Umgekehrt ist mindestens ein $c_i$ null, wenn $d_i\leq r_i$. Nämlich das höchstwertigste Bit wo sich die beiden Zahlen unterscheiden. Die 1 wird addiert, damit ein $c_i$ gerade Null annimmt, wenn $d$ kleinergleich ist. Der Faktor 3 garantiert, dass $c_i$ ungleich Null ist sobald sich die Zahlen in einem Bit unterscheiden.
+
+\end{itemize}
+
+Man sieht, dass alleine durch die Möglichkeit Linearkombinationen von Chiffren zu bilden ein additiv-homomorphen Kryptosystems komplexer Operatoren ausführen kann!
+
+\textbf{Kategorisierungskriterien:} additiv-homomorph, Simulierte Operatoren: Projektion und Abstand (wobei teilweise Parameter unverschlüsselt vorlagen) und Vergleich (beide Zahlen verschlüsselt)
+
+\textbf{Malleabiliy:} Anstelle von malleability wird in dieser Veröffentlichung lediglich von \enquote{re-randomization} gesprochen, was sich bezieht auf eine Neuverschlüsselung einer Zahl z.B. durch Addition von Null. Alice vertraut Bob der korrekten Durchführung des Eigenfacesalgorithmus und Bob akzeptiert, dass Alice grobe Eigenschaften über seiner Gesichtserkennungssystem lernen kann. Es wird von einem honest-but-curious Modell ausgegangen. Eine Malleability wurde nicht untersucht, jedoch ist klar, dass Bob nie Einsicht in  private biometrische Daten von Alice erhält. Denn Bob operiert  auf Chiffren die unter Alices öffentlichen Schlüssel verschlüsselt sind. Bob kann eine Malleability nicht ausnutzen, weil er keine entschlüsselten Informationen bei Alice anfragen kann.
+
+Alice ist zwar in der Lage beliebig veränderte Chiffrate Bob zurückzugeben, z.B. die $x_i$ bei der Abstandsberechnung. Jedoch führt dies lediglich zu einem verfälschten Ergebnis des Eigenfacesalgorithmus welchen Bob ausführt. Damit kann Alice Malleability nicht für eigene Vorteile ausnutzen.
+
+\section{Private predictive analysis on encrypted medical data}
+\label{PAMD}
+In \cite{bos2014private} stellen Joppe W. Bos et. al stellen ein Verfahren vor zur privaten Analyse von in die Cloud ausgelagerten medizinischer Daten. Sie implementieren eine logische Regression auf homomorph verschlüsselten Daten um die Wahrscheinlichkeit einer Herzkreislauferkrankung zu prädizieren. Zum Einsatz kommt ein Stufenfixes (engl. leveled) homomorphes Kryptosystem (\ref{LHE}).
+In dem Präditkionsmodell mit logistischer Regression ist die Prädiktionsformel
+\begin{equation*}
+P(x) = \frac{e^x}{e^x-1}
+\end{equation*}
+wobei x eine Linearkombination von gewichteten Regressionskoeffizienten repräsentiert. Somit ist x offenbar homomorph berechenbar. Die Prädiktionsformel wird homomorph berechenbar indem man sie durch eine Taylorreihe annähert.
+
+In Anlehnung an \cite{bos2013improved} \cite{naehrig2011can} stammen daher die zu verknüpfenden Variablen aus einem Polynomring $R=\mathbb{Z}/(X^n+1)$. Der Klartextraum und Chiffreraum besteht aus Polynomen $\sum_{i=0}^{n-1} a_i X^i, a_i\in\mathbb{Z}$. Operationen im Chiffreraum entsprechen der Addition und Multiplikation von Polynomen mod $X^n+1$. Mit diesem Stufenfixen homomorphen Kryptosystem ist es dann möglich alle Operationen zur Berechnung der Prädiktionsformel durchzuführen. Trotzdem ist noch folgendes Problem vorhanden: Die Eingabe welche eine Linearkombination von prädizierenden Regressionskoeffizienten ist, sowie die letztere selbst sind in  der Anwendung typischerweise rationale Zahlen.
+
+Um das Kryptosystem verwenden zu können, müssen alle Eingaben als Polynome dargestellt werden, z.B. durch die 2-adische Darstellung: $\sum_{i=0}^{n-1} a_i 2^i, a_i\in\{0,1\}$. Wir können mit rationalen Zahlen rechnen wenn wir eine fixe Fließkommagenauigkeit vorab festgelegen (d.h. Grad des Polynoms). Dann werden rationale Zahlen zu Integern rück-/transformiert durch Division/Multiplikation mit dem zugehörigen Fakter $k^{10}$.
+
+\textbf{Kategorisierungskriterien:} leveled-homomorphic-encryption (multiplikativ, additiv), simuliert p-adische Darstellung womit rationale Zahlen dargestellt werden können
+
+\textbf{Malleabiliy:} Eine malleability der Kryptosystems wurde nicht untersucht. Der Cloudprovider übernimmt die Rolle outgesourcter Rechenkapazität die Eingaben deterministisch verarbeitet. Im Kontext des Anwendungsfalls sind sowohl Kunde als auch Cloudprovider an komplett ehrlicher, aber vertraulicher Verarbeitung interessiert. 
+
+\section{Sichere Berechnung von Funktionen mit SMC oder HE}
+In den Studien \cite[p.420]{damgaard2007efficient} und \cite[p.2]{sadeghi2009efficient} wurden zwei Techniken identifiziert um Funktionen sicher zu berechnen: Secure Multi-Party Computation und Homomorphe Verschlüsselung. Dabei kommen beide Studien unabhängig voneinander zu den gleichen Schlüssen über die Vorzüge der jeweiligen Verfahren:
+\begin{itemize}
+	\item SMC Vorteil: viel Kommunikation
+	\item SMC Nachteil: geringe Runden- und Berechenkomplexität
+	\item HE Vorteil: geringe Kommunikation
+	\item HE Nachteil: hohe Runden- und Berechenkomplexität
+\end{itemize}
+
+\section{Bitweise Verschlüsselung vs Integerverschlüsselung}
+Mit bitweiser Verschlüsslung lassen sich Grundoperatoren XOR und AND erzeugen. Und damit nach Abschnitt \ref{MG} jede boolesche Funktion bestimmen. Nachteil ist, dass ein Chiffretext weniger Information erhält. Bitweise Verschlüsslung erzeugt einen separaten Chiffretext für jedes Bit und erzeugt damit einen großen Overhead, so dass nach Möglichkeit auf Integerverschlüsselung ausgewichen wird. [?]
+
+% Wichtig für eine sehr gute Note ist die Fähigkeit zur Bewertung der Kryptosysteme zu ihrer möglichen Umsetzung für Pseudonymisierungsverfahren.
+
+
+\section{Zusammenfassung...}
+
+Homomorphe Kryptosysteme können verwendet werden für Sichere Wahlsysteme (paillier), Kollisionsresistente hashfunktionen und Private Informationsrückgewinnungssysteme (Kushilevitz and Ostrovsky single server PIR protocol)
+\cite[p.228]{maimut2012homomorphic} (Lieber andere Quellen!)
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | p{5cm} |}
+		\hline
+		Kryptosystem & hom. Operator & sim. Operator & modi \\ \hline
+		Pailler & $+$ & XOR, $\left\langle\cdot,\cdot \right\rangle$  & bitwise, bytewise, float \\ \hline
+		ElGamal & $\cdot$ & -  & - \\ \hline
+		hash-ElGamal & XOR &  - & - \\ \hline
+		Goldwasser-Micaeli & XOR & & \\ \hline
+		BGV (HELib) & vollhom. & any& \\ \hline
+	\end{tabular}
+\end{center}
