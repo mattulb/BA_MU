@@ -1,0 +1,267 @@
+\chapter{Grundlegende Aspekte}
+\label{HK}
+
+In diesem Kapitel werden die Grundlagen eingeführt um das Schema eines semihomomorphen Kryptosystems zu verstehen. Dazu wird zunächst der Zweck eines Kryptosystems erläutert und der Begriff formal eingeführt. Dann wird die Definition erweitert bis hin zum semihomomorphen Kryptosystem.
+
+\section{Schutzziele der Informationssicherheit}
+Die Kryptografie hat zur Aufgabe Lösungen für die Realisierung verschiedener Schutzziele der Informationssicherheit bei der Speicherung, Vervielfältigung und Übertragung von Informationen umzusetzen. Die Kryptografie stellt dazu verschiedene Algorithmen und Protokolle bereit. Grundlegende Schutzziele beim Übertragen von Informationen zwischen mehreren Parteien in  Nachrichten sind nach \cite[p.4]{menezes1996handbook}\cite[p.2]{delfs2002introduction}:
+%\cite{mm2015itsec}
+\begin{enumerate}
+	\item \textbf{Vertraulichkeit:} Keine unautorisierte Kenntnisnahme. Nur dazu berechtigte Personen sollen eine bestimmte Information lesen können oder Zugang zu dieser Information erhalten. Dieses Sicherheitsziel impliziert Geheimhaltung. Vertraulichkeit kann physisch erreicht werden (z.B. das Abschließen in einer Kiste) oder durch mathematische Algorithmen, welche die Daten unverständlich machen. 
+	\item \textbf{Integrität:} Keine unautorisierte unbemerkte Datenmanipulation. Um die Integrität von Daten zu gewährleisten muss die Möglichkeit einer Detektion von Veränderungen in den Daten realisiert werden.  So kann insbesondere das Hinterlegen von Falschdaten in einer Nachricht oder das Fehlen von Teilen einer Nachricht erkannt werden.
+	\item \textbf{Authentizität:} Authentizität meint die Fähigkeit einer Identifikation in Bezug auf die Information als auch auf die Kommunikationspartner (Entitäten). Fordert man, dass die kommunizierenden Teilnehmer in der Lage sein sollen, sich gegenseitig zu identifizieren, spricht man von Authentizität der Entitäten. Bei einseitiger Kommunikation fordert man lediglich, den Urheber einer Nachricht identifizieren zu können, also die Authentizität des Datenursprungs.
+	\item \textbf{Nichtabstreitbarkeit:} Der Versand einer Nachricht kann von dem Sender nach dem Versand nicht mehr abgestritten werden. Zum Beispiel, wenn eine Entität den Kauf in einer unabstreitbaren Nachricht zunächst autorisiert, jedoch später verneint, so kann in Konfliktfällen die ursprüngliche Zusage nachgewiesen werden.
+\end{enumerate}
+
+\section{Kryptosysteme}
+\label{kryptosystem}
+Ein Kryptosystem besteht aus mehreren Algorithmen, um das Schutzziel der Vertraulichkeit bei der Übertragung von Informationen umzusetzen  \cite{Cryptosy29:online}.
+
+Damit ermöglicht ein Kryptosystem zwei Parteien Alice und Bob über einen ungeschützten Kanal, in dem die Nachricht übertragen wird, zu kommunizieren ohne das eine dritte Partei Zugang zu der geschützten Information erhält.
+
+Die zugrundelegenden Algorithmen und resultierende Eigenschaften über die Beziehung von Klartexten zu Chiffretexten führen zu verschiedenen Klassen von Kryptosystemen. Einige dieser Kryptosysteme führen wir in diesem Abschnitt ein. 
+
+In der Literatur lassen sich verschiedene Formalisierungen für ein Kryptosystem finden. Wir verwenden die Definition von Douglas R. Stinson \cite[p.1]{stinson2006cryptography} und erweitern diese Definition im Anschluss für eine bessere Differenzierung um Eigenschaften wie Determinismus oder Symmetrie.
+
+\newtheorem{theorem}{Definition}
+\begin{theorem}[Kryptosystem]
+	\label{KS}
+	Ein Kryptosystem ist ein Quintupel $(\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ welches folgenden Eigenschaften genügt:
+	\begin{enumerate}
+		\item $\mathcal{P}$ ist eine endliche Menge von Klartexten, der Klartextraum.
+		\item $\mathcal{C}$ ist eine endliche Menge von Chiffretexten, der Chiffreraum.
+		\item $\mathcal{K}$ ist eine endliche Menge möglicher Schlüssel in Form von Tupeln, der Schlüsselraum.
+		\item Für alle Schlüssel $k\in \mathcal{K}$ gibt es eine Verschlüsselungsfunktion $\mathcal{E}\ni e_k:\mathcal{P}\rightarrow\mathcal{C}$ und zugehörige Entschlüsselungsfunktion $\mathcal{D}\ni d_k:\mathcal{C}\rightarrow\mathcal{D}$, so dass für alle Klartexte $x\in\mathcal{P}$ folgende Identität gilt: $d_k(e_k(x)) = x$. Dabei können in der Verschlüsselungs- und Entschlüsselungsfunktion nur ein Teil des Tupels $k$ verwendet werden.
+	\end{enumerate}
+\end{theorem}
+
+Grundsätzlich muss ein Kryptosystem also mindestens drei Algorithmen bereitstellen: Einen für die Erzeugung des Schlüssels, einen für die Verschlüsselung und einen für die Entschlüsselung. Man beachte, dass der Schlüssel $k$ als \textit{ein} Element des Schlüsselraums selber aus \textit{mehreren} Elementen zusammengesetzt werden kann. Diese Eigenschaft führt zu den nächsten beiden Erweiterungen. Wir definieren:
+\begin{theorem}[Symmetrisches Kryptosystem]
+	Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein Kryptosystem. Dann nennen wir K symmetrisch, wenn jede Verschlüsselungsfunktion $e_k$ als auch die zugehörige Entschlüsselungsfunktion $d_k$ vollständig von \textit{demselben} Schlüssel $k\in\mathcal{K}$ abhängen. Vollständig bedeutet, dass diese Funktionen insbesondere nicht nur von einer Teilmenge von $k$ abhängen, wenn der Schlüssel k aus mehreren Parametern zusammengesetzt ist. Alle Parameter von $k$ gehen in die Verschlüsselungsfunktion und Entschlüsselungsfunktion ein.
+\end{theorem}
+
+Ein Nachteil von symmetrischen Kryptosystemen liegt auf der Hand: Da sowohl Alice als auch Bob den gleichen geheimen Schlüssel benötigen, muss dieser über einen sicheren Kanal übertragen werden bevor sie geheime Nachrichten austauschen können. Daher sind  symmetrische Kryptosysteme auch bekannt als \textit{private-key} Kryptosysteme.
+
+Im Gegensatz dazu existieren Kryptosysteme bei denen $k$ aus einem privaten und einem öffentlichen Teilschlüssel zusammensetzt ist. Diese Teilmengen müssen nicht disjunkt\footnote{Im RSA-Kryptosystem enthalten die Mengen beider Teilschlüssel den Modulus $n$ \cite[p.6]{rivest1978method}.} sein. Alice kann nun ihren öffentlichen Teilschlüssel bekannt geben, um so Dritten zu ermöglichen ihr Informationen vertraulich zukommen zu lassen. Daher spricht man auch von \textit{public-key} Kryptosystemen, ein Konzept das Ursprünglich von Diffie und Hellmann in \cite[p.648]{diffie1976new} eingeführt wurde. Wir definieren:
+\begin{theorem}[Asymmetrisches Kryptosystem]
+	Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein Kryptosystem. Dann nennen wir K asymmetrisch wenn sich der Schlüssel $k\in\mathcal{K}$ zusammensetzt aus $k=(k_s, k_p)$ mit $k_s,k_p\in K$. Die Verschlüsselungsfunktion ist dann $\mathcal{E}\ni e_{k_p}:\mathcal{P}\rightarrow\mathcal{C}$, während die Entschlüsselungsfunktion $\mathcal{D}\ni d_{k_s}:\mathcal{P}\rightarrow\mathcal{C}$ ist. Während $e_k$ von beliebigen Parteien ausgeführt werden kann, kann $d_k$ nur vom Besitzer des privaten Teilschlüssel $k_s$ ausgeführt werden. $k_s$ muss geheim gehalten werden.
+\end{theorem}
+
+Öffentlicher und privater Teilschlüssel stehen in einem mathematischen Zusammenhang, der jedoch für Angreifer mit begrenzter Rechenkapazität praktisch unmöglich zu erschließen ist.
+
+Diese drei Definitionen genügen noch nicht um zu beschreiben, in welcher Beziehung Klartexte zu ihren Chiffraten stehen, wenn sie mit dem gleichen Schlüssel in verschiedenen Instanziierungen des Verschlüsselungsalgorithmus erzeugt werden. Dies ist für mögliche Angreifermodelle der Kryptoanalyse von Bedeutung welche in \ref{angreifermodelle} vorgestellt werden.
+
+\begin{theorem}[Deterministisches Kryptosystem]
+%\footnote{Diese Definition ist eine Formalisierung von saloppen Beschreibungen in der Literatur.}
+	Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein Kryptosystem. Dann nennen wir K deterministisch, wenn gilt: Für einen beliebigen festen Schlüssel $k\in\mathcal{K}$ ist $e_k$ injektiv.
+\end{theorem}
+
+Seien nun $c_1,c_2\in\mathcal{C}, c_1= c_2$ zwei Chiffrate unter $e_k$, dann folgt daraus für ihre Klartexte, dass $x_1= x_2$. Also führt der gleiche Klartext unter Verwendung desselben Schlüssels bei verschiedenen Ausführungen von der Verschlüsselungsfunktion $e_k$ zu einem identischen Chiffrat.
+
+Jetzt kann man in Abgrenzung zu dieser Definition das probabilistische Kryptosystem einführen. Ein probabilistisches Kryptosystem erzeugt für gleiche Klartexte bei demselben Schlüssel mit jeder Ausführung der Verschlüsselungsfunktion ein  
+% im Allgemeinen
+anderes Chiffrat.
+% Wohlgemerkt: im Allgemeinen, d.h. nicht immer. Deswegen ist dieses Kryptosystem streng genommen nicht gegensätzlich zu einem Deterministischen Kryptosystem definiert.
+
+Das Konzept eines probabilistischen Kryptosystems wurde ursprünglich von Goldwasser und Micali eingeführt in \cite{goldwasser1984probabilistic}. Wir definieren in Anlehnung an \cite[p.345]{stinson2006cryptography}:
+
+\begin{theorem}[Probabilistisches Kryptosystem]
+	\label{PKS}
+	Ein Probabilistischen Kryptosystem ist ein sechselementiges Tupel $(\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D},\mathcal{R})$. Wie bereits in Definition \ref{KS} ist $\mathcal{P}$ ist der Klartextraum, $\mathcal{C}$ der Chiffreraum und $\mathcal{K}$ der Schlüsselraum. Neu sind:
+	\begin{itemize}
+		\item $\mathcal{R}$ ist eine endliche Menge von Zufallszahlen
+		\item Für alle Schlüssel $k\in \mathcal{K}$ gibt es eine Verschlüsselungsfunktion $\mathcal{E}\ni e_k:\mathcal{P}\times\mathcal{R}\rightarrow\mathcal{C}$ und zugehörige Entschlüsselungsfunktion $\mathcal{D}\ni d_k:\mathcal{C}\times\mathcal{R}\rightarrow\mathcal{D}$, so dass für alle Klartexte $x\in\mathcal{P}$ und alle Zufallszahlen $r\in\mathcal{R}$ folgende Identität gilt: $d_k(e_k(x,r)) = x$ 
+	\end{itemize}
+	Für ein festes $k\in K$ und ein beliebigen Klartext $x\in P$ definieren wir die Wahrscheinlichkeitsverteilung $Pr_{K,x}$ auf $C$, so dass  $Pr_{K,x}(y)$ die Wahrscheinlichkeit angibt, dass $y$ ein Chiffrat von $x$ unter $e_k$ ist. Nun fordern wir:
+	
+	\begin{itemize}
+			\item Gegeben $x_1,x_2\in P, x_1\neq x_2$ und $k\in K$. Dann sind die Wahrscheinlichkeitsverteilungen $Pr_{K,x_1}$ und  $Pr_{K,x_2}$ nicht in Polynomialzeit unterscheidbar\footnote{unterscheidbar meint, dass ein Algorithmus existiert der entscheiden kann ob ein Bitstring eher aus der Wahrscheinlichkeitsverteilung $Pr_{K,x_1}$ oder  $Pr_{K,x_2}$ kommt \cite[p.329]{stinson2006cryptography}. Die Berechenkomplexität des Algorithmus wächst in Relation zur Eingabegröße höchstens in Größe einer Polynomfunktion. }.
+	\end{itemize}
+\end{theorem}
+
+Nicht unterscheidbar hat insbesondere zur Folge, dass wir auch nicht wissen ob die gleiche Wahrscheinlichkeitsverteilung hinter zwei Chiffraten steckt. In anderen Worten: Die wiederholte Verschlüsselung eines Klartextes führt im Allgemeinen zu verschiedenen Chiffraten.
+
+Ein probabilistisches Kryptosystem nutzt Zufall in der Verschlüsselungsfunktion, so dass der gleiche Klartext verschieden verschlüsselt wird. Probabilistischen Kryptosystemen sind meistens gleichzeitig asymmetrisch, es ist jedoch auch möglich mit symmetrischen Verschlüsselungsverfahren diese Eigenschaft zu erreichen, z.B. bei Verwendung von Blockchiffren im Cipher Block Chaining Mode. Die Menge der Zufallszahlen $\mathcal{R}$ entspricht dann der Menge möglicher Initialisierungsvektoren. 
+
+\section{Algebraische Strukturen}
+\label{MG}
+
+Nun wird der Begriff eines homomorphen Kryptosystems im Detail eingeführt. Um dessen Anwendung zu verstehen, ist es jedoch zunächst nötig folgende algebraische Strukturen nach \cite[p.43,54,56]{fischer2010lineare} zu erläutern, um nachvollziehen zu können welche mathematischen Rechenoperationen ein homomorphes Kryptosystem bietet.
+
+\subsection{Von Gruppen zu Körpern}
+
+\begin{theorem}[Gruppe]
+	Eine Gruppe ist ein Tupel $(G,+)$ bestehend aus der Menge $G$ und einer Verknüpfung $+$ auf $G$ mit folgenden Eigenschaften:
+	\begin{itemize}
+		\item $+$ ist assoziativ $\forall a,b,c\in G: (a+b)+c=a+(b+c)$
+		\item Es existiert bzgl. $+$ ein neutrales Element $e_+$ in $G$: $\forall a \in G: e_+ +a=a$
+		\item Jedes $g$ in $G$ ist invertierbar mit einem Element $g'$ aus $G$, s.d. $g+g'=e_+$
+	\end{itemize}
+	
+	Ist die Verknüpfung einer Gruppe zusätzlich kommutativ ($\forall a,b\in G: a+b=b+a$), so nennt man sie abelsch.
+	
+\end{theorem}
+
+\begin{theorem}[Ring]
+	\label{Ring}
+	Ein Ring ist ein Tripel $(R,+,\cdot)$ bestehend aus der Menge $R$ und zwei Verknüpfungen $+$ und $\cdot$ auf $R$ mit folgenden Eigenschaften:
+	\begin{itemize}
+		\item $(R,+)$ eine abelsche Gruppe.
+		\item $\cdot$ ist assoziativ für alle Elemente aus R
+		\item Es gelten die Distributivgesetze: $\forall a,b,c\in R: a\cdot(b+c)=(a\cdot b)+(a\cdot c)$ und $(a+b)\cdot c = (a\cdot c)+(b\cdot c)$
+	\end{itemize}
+\end{theorem}
+
+Hat $R$ bzgl. $\cdot$ ein neutrales Element $e_\bullet$, so nennen wir $R$ einen \enquote{Ring mit Eins} (oder Monoid). Ist $R$ bzgl. $\cdot$ kommutativ, so nennen wir $R$ einen \enquote{kommutativen Ring}. 
+
+\begin{theorem}[Körper]
+	Sei $K$ ein kommutativer Ring mit Eins wie in \ref{Ring}, so heißt $K$ Körper, wenn $(R\textbackslash\{e_+\},\cdot)$ ein abelsche Gruppe bildet.
+	
+\end{theorem}
+
+%\begin{theorem}[K-Vektorraum] 
+%	Sei $(K,+,\cdot)$ ein Körper und $V$ eine Menge. Zusätzlich existieren zwei Verknüpfungen $\oplus: V\times V \rightarrow V$ und $\otimes: K\times V \rightarrow V$, so dass gilt:
+	
+%	\begin{itemize}
+%		\item $(V,\oplus)$ bildet eine abelsche Gruppe
+%		\item Für die Multiplikation von beliebigen Elementen $v,w$ aus $V$ mit beliebigen sogenannten Skalaren $\lambda,\mu$ aus K gelten folgende Regeln:\\
+%		$(\lambda + \mu)\otimes v = \lambda\otimes v \oplus \mu\otimes v,\ \lambda\otimes (v\oplus w) = \lambda\otimes v \oplus \lambda\otimes w,\ \lambda\otimes(\mu\otimes v)=(\lambda\mu)\otimes v,\ e_{\bullet}\otimes v = v$
+		
+%	\end{itemize}
+%	Dann nennen wir $V$ einen K-Vektorraum.
+%\end{theorem}
+
+\subsection{Homomorphismus}
+\label{Homomorphismus}
+Nun haben wir gesehen wie Elemente einer Menge mit bestimmten Rechenoperationen und mathematischen Eigenschaften in algebraische Strukturen zusammengefasst werden können. Werden Elemente einer algebraischen Struktur unter einer Funktion in einer andere Struktur abgebildet, so können für die Elemente unter der Abbildung diese Eigenschaften erhalten bleiben. Ist das der Fall, so spricht man von einem Homomorphismus. Homomorphismen existieren für alle oben genannten Strukturen. Einen Ringhomomorphismus definiert man formal zu \cite[p.56]{fischer2010lineare}:
+
+\begin{theorem}[Ringhomomorphismus] 
+	Sind $(R,+_1,\bullet_2)$ und $(S,+_2,\bullet_2)$ Ringe, so nennt man die Abbildung $\phi:R\rightarrow S$ einen Ringhomomorphismus, falls gilt:
+	\begin{itemize}
+		\item $\forall a,b\in R: \phi(a +_1 b)=\phi(a)+_2\phi(b)$ und $\phi(a \bullet_2 b)=\phi(a) \bullet_2\phi(b)$ 
+	\end{itemize}
+\end{theorem}
+
+\subsection{Modulare Arithmetik}
+\label{modulareArithmetik}
+
+In der Kryptographie rechnet man für gewöhnlich nicht mit allen Zahlen, sondern mit \textit{natürlichen Zahlen unterhalb einer gewissen Grenze n}. Rechenergebnisse mit Zahlen größer als n werden auf Zahlen bis zur Grenze n \textit{modular reduziert}. Das Rechnen auf dem reduzierten Zahlenbereich nennt man modulare Arithmetik.
+
+Von besonderer Bedeutung sind insbesondere Prime Restklassen $(\mathbb{Z}/ n\mathbb{Z})^*$. Diese Struktur ist eine Menge bestehend aus ganzen Zahlen kleiner $n$, welche gleichzeitig zu $n$ teilerfremd sind:
+
+\begin{equation*}
+	\mathbb{Z}/ n\mathbb{Z} = \big\{a\in\{0,1,\ldots,n-1\}|\ ggT(a,n)=1\big\}
+\end{equation*}
+
+Zusammen mit der Multiplikation modulo n bildet die Prime Restklasse eine Gruppe, d.h. ihre Elemente sind insbesondere invertierbar \cite[p.116]{beutelspacher1995moderne}.
+
+\section{Homomorphe Kryptosysteme}
+\label{HomoKrypto}
+
+Mit den mathematischen Voraussetzungen aus \ref{MG} können wird nun den Begriff eines homomorphen Kryptosystems formalisieren.
+
+\subsection{Semihomomorphes Kryptosystem}
+
+ Laut \ref{Homomorphismus} ist ein Homomorphismus strukturerhaltend, das bedeutet: Für Verknüpfungen im Chiffreraum findet man eine entsprechende Verknüpfung im Klartextraum. Diese Eigenschaft in einem Kryptosystem ermöglicht eine Verarbeitung von Daten unter Wahrung der Vertraulichkeit dieser. Daher können semihomomorphe Kryptosysteme eingesetzt werden, um bekannte Protokolle datenschutzfreundlich zu machen, wie mehrere der vorgestellten Veröffentlichungen in Kapitel \ref{KHK} zeigen. Auf der anderen Seite kann die Homomorphieeigenschaft bösartig ausgenutzt werden, wie in \ref{malleability} an einem Beispiel erläutert wird.
+
+\begin{theorem}[Semihomomorphes Kryptosystem]
+	\label{PKS}
+	Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein asymmetrisches Kryptosystem. Wir nennen K semihomomorph, wenn $(\mathcal{P},\oplus)$ und $(\mathcal{C},\odot)$ Gruppen bilden und die Verschlüsselungsfunktion ein Gruppenhomorphismus ist. 
+	\begin{itemize}
+		\item Das heißt alle unter $e_{k_p}$ erzeugten Chiffrate bilden einen Gruppe.
+		\item Sei $e_{k_p}(x_1)=c_1,e_{k_p}(x_2)=c_2$. Dann gilt: $d_{k_s}(c_1\odot c_2)= m_1\oplus m_2$
+	\end{itemize}
+\end{theorem}
+
+Diese Definition ist orientiert an \cite[p.499]{katz2014introduction}. Ein konkretes Beispiel stellen wir mit dem Okamoto-Uchiyama Schema in \ref{OUK} vor.
+
+\subsection{Vollhomomorphes Kryptosystem}
+\label{VHKK}
+
+Lange Zeit nahm man an, dass es keine Kryptosysteme gibt, welche beliebige Sequenzen von Rechenoperationen im Chiffreraum ermöglichen - d.h. vollhomomorph wären. Bekannte semihomomorphe Kryptosysteme erlauben nur eingeschränkte Operationen (z.B. Addition oder XOR). Dann stellten Boneh et al. ein Verfahren vor, welches neben beliebig vielen Additionen zusätzlich \textit{eine} Multiplikation erlaubt \cite[p.2]{boneh2005evaluating}. Im Jahr 2009 stellte schließlich Craig Gentry \cite{gentry2009fully} erstmals ein Verfahren vor, wo im Chiffreraum beliebig viele Rechenoperationen eines Rings möglich sind, d.h. Additionen und Multiplikationen. In Anlehnung an \cite[p.48]{yi2014homomorphic} wird definiert:
+
+\begin{theorem}[Vollhomomorphes Kryptosystem]
+	\label{PKS}
+	Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein asymmetrisches Kryptosystem. Wir nennen K vollhomomorph, wenn $(P,\otimes,\ominus)$ und $(C,\odot,\oplus)$ Ringe bilden und die Verschlüsselungsfunktion ein Homomorphismus von Ringen ist. 
+	\begin{itemize}
+		\item Das heißt alle unter $e_{k_p}$ erzeugten Chiffrate bilden einen Ring.
+		\item Sei $e_{k_p}(x_1)=c_1,e_{k_p}(x_2)=c_2$. Dann gilt: $d_{k_s}(c_1\odot c_2)= m_1\otimes m_2$ sowie $d_{k_s}(c_1\oplus c_2)= m_1\ominus m_2$
+	\end{itemize}
+\end{theorem}
+
+
+Gentry konnte zeigen, dass ein beliebe Schaltung aus NANDs im Chiffreraum evaluiert werden kann. Dies ist ein Durchbruch, denn NANDs bilden für sich ein vollständiges Operatorensystem mit dem jede boolesche Funktion beschrieben werden kann \cite[p.129]{hoffmann2010grundlagen}. Damit ermöglicht ein vollhomomorphes Kryptosystem die Berechnung einer \textit{beliebigen} booleschen Funktion im Chiffreraum.
+
+Ein vollhomomorphes Kryptosystem besteht aus vier Algorithmen: Zusätzlich zur Schlüsselgenerierung, Verschlüsselung und Entschlüsselung gibt es noch einen Algorithmus für die Evaluierung eines Schaltkreises im Chiffreraum. Sei $k_p$ der öffentliche Schlüssel unter dem die Chiffrate $c_1,\ldots,c_l$ erzeugt worden. Dann ermöglicht der Evaluierungsalgorithmus das Berechnen eines beliebigen Schaltkreises $S$ zu dem Ergebnis $c$:
+
+\begin{equation*}
+\textbf{Evaluate}_{k_p}(S,c_1,\ldots,c_l) = c
+\end{equation*}
+
+Trotz dieser größeren Funktionalität finden bis heute vollhomomorphe Kryptosysteme wenig Einsatz in der Praxis, da sie zu hohe Anforderungen an verfügbare Rechenkapazitäten stellen. So führen z.B. Sicherheitsgarantien gegen bekannte Angriffe bei Gentrys Verfahren dazu, dass die Expansionsrate\footnote{Unter der Expansionsrate versteht man das Verhältnis von der Länge des Chiffrats zu der Länge des zugehörigen Klartextes. Die Expansionsrate von probabilistischen Kryptosystemen ist sehr groß, d.h. ein Kilobit wird benötigt und einige Bits zu verschlüsseln. \cite[p.3+10]{naccache1998new}} der Chiffretext überhand gewinnt \cite[p.49]{yi2014homomorphic}.
+
+Stattdessen weicht man auf semihomomorphe Kryptosysteme aus wenn sie den Anforderungen genügen, oder realisiert eine Kombination aus zwei Kryptosystemen, von denen eins additiv und das andere multiplikativ ist. Ein Beispiel für so eine Realisierung werden wir in \ref{autocrypt} sehen. Eine andere Möglichkeit ist der Einsatz von eingeschränkt vollhomomorphen Kryptosystemen die im nächsten Abschnitt vorgestellt werden.
+
+\textbf{Abschließende Anmerkungen:}\\
+Es kommen fast ausschließlich probabilistische homomorphe Kryptosysteme zum Einsatz, obwohl es deterministische homomorphe Kryptosysteme gibt. Jedoch wurde von Boneh und Lipton in 1996 gezeigt, das \textit{jedes} deterministische homomorphe Kryptosystem in subexponentieller Zeit gebrochen werden kann \cite{boneh1996algorithms}. 
+
+\subsection{Eingeschränkt Vollhomomorphes Kryptosysteme}
+\label{LHE}
+Bei eingeschränkt vollhomomorphen Kryptosystemen (in der englischen Literatur werden die Begriffe \textit{leveled} oder \textit{somewhat homomorphic encryption} verwendet) geht man einen Kompromiss ein, um den Overhead von vollhomomorphen Kryptosystemen zu reduzieren, unter Verzicht nicht mehr beliebig viele Rechenoperationen durchführen zu können. Übertragen auf Gentrys Evaluierung eines Schaltkreises, wird die Tiefe der Hintereinanderschaltungen von Schaltkreiselementen eingeschränkt.
+
+Für eine genauere Differenzierung von \textit{leveled} zu \textit{somewhat} vollhomomorphen Kryptosystemen, sowie eine Übersicht zu verwandten Begrifflichkeiten im Zusammenhang mit vollhomomorphen Kryptosystemen sei der Leser auf \cite[p.5+14]{armknecht2015guide} verwiesen.
+
+\subsection{Okamoto-Uchiyama Kryptosystem}
+\label{OUK}
+
+In Kapitel \ref{KHK} werden verschiedene homomorphe Kryptosysteme erwähnt, welche teilweise verwandt sind, wie die Tabelle in \ref{klassSum} zeigt. Einige dieser Verfahren können als Generalisierungen anderer aufgefasst werden. Im Folgenden wird nun beispielhaft das homomorphe Kryptosystem von Okamoto-Uchiyama \cite[p.311]{okamoto1998new} vorgestellt.
+
+Das Kryptosystem von Okamoto-Uchiyama ist probabilistisch, asymmetrisch, verfügt über Homomorphieeigenschaften und ist semantisch sicher (\ref{semantischSicher}). Das System arbeitet in der Prime Restklasse  $(\mathbb{Z}/n\mathbb{Z})^*$ (\ref{modulareArithmetik}) wobei $n$ sich zusammensetzt aus zwei großen Primzahlen $p,q$ über $n=p^2 q$. Wie in \ref{kryptosystem} erwähnt, kommen in einem Kryptosystem drei grundlegende Algorithmen für Schlüsselgenerierung, Verschlüsselung und Entschlüsselung vor:
+
+\subsubsection*{Schlüsselgenerierung:}
+\begin{enumerate}
+	 \item Wähle zwei große Primzahlen $p,q\ (|p|=|q|=k)$.
+	 \item Dann setze $n=p^2 q$.
+	 \item Wähle $g\in(\mathbb{Z}/ n\mathbb{Z})^*$, so dass für die Ordnung\footnote{Dies ist die kleinste natürliche Zahl, für die ein Element der Gruppe mit sich selbst multipliziert das neutrale Element der Gruppe ergibt.} $g_p$ von $g$ gilt: $g_p \coloneqq g^{p-1}\ \text{mod}\ p^2 \stackrel{!}{=} p$
+	 \item Dann setze  $h=g^n\ \text{mod}\ n$.
+\end{enumerate}
+Öffentlicher Schlüssel ist das Tupel $(n,g,h)$, privater Schlüssel ist das Tupel $(p,q)$.
+
+\subsubsection*{Verschlüsselung:} 
+Sei $0<m<2^{k-1}$ ein Klartext.
+\begin{enumerate}
+	\item Wähle gleichverteilt ein $r\in(\mathbb{Z}/ n\mathbb{Z})$. Diese Ergänzung macht das Kryptosystem probabilistisch. Bei nochmaliger Verschlüsselung bekommt der gleiche Klartext ein anderes Chiffrat.
+	\item Dann ist das zu m zugehörige Chiffrat: 
+\end{enumerate}
+	\begin{equation*}
+		E(m,r)=g^m h^r\ \text{mod}\ n = C.
+	\end{equation*}
+
+\subsubsection*{Entschlüsselung:} 
+Sei $C_p$ die Ordnung von dem Chiffrat $C$ modulo $p^2$. Dann ist der zu C zugehörige Klartext:
+\begin{equation*}
+D(C)=\frac{C_p-1}{g_p-1}\ \text{mod}\ p = m.
+\end{equation*}
+
+\subsubsection{Eigenschaften des Okamoto-Uchiyama Kryptosystems}
+\paragraph{Homomorphe Addition von Klartexten:}
+
+Das Verfahren von Okamoto-Uchiyama ermöglicht eine homomorphe Addition von Klartexten $m_1, m_2$ durch die Multiplikation ihrer jeweiligen Chiffren unter der Nebenbedingung, dass $m_1+m_2<p$.
+\begin{equation*}
+E(m_1,r_1) E(m_2,r_2)\ \text{mod}\ n = g^{m_1} h^{r_1}g^{m_2} h^{r_2} \ \text{mod}\ n =  g^{m_1+m_2} h^{r_3}\ \text{mod}\ n = E(m_1+m_2,r_3) \ \text{mod}\ n\  
+\end{equation*}
+Die Addition kann auf mehrere Klartexte $m_1,m_2,\ldots,m_n$ erweitert werden, sofern ihre Summe weiter die Nebenbedingung $\sum_{i=1}^{n} m_i < p$ erfüllt.
+
+\paragraph{Homomorphe Multiplikation von Klartexten:}
+
+Weiter ist eine homomorphe Multiplikation von einem beliebigen zu verschlüsselndem Klartext $m$ mit einer Konstanten $k$ möglich, indem das Chiffrat zu $m$ mit $k$ potenziert wird:
+\begin{equation*}
+E(m, r)^k = (g^{m} h^{r})^k \ \text{mod}\ n = g^{m k} h^{r'}\ \text{mod}\ n.
+\end{equation*}
+
+\paragraph{Ersetzbarkeit von Chiffraten:}
+
+Ein erzeugtes Chiffrat $C=E(m,r)$ kann alleine durch Kenntnis des öffentlichen Schlüssels in ein von $C$ verschiedenes Chiffrat $C'$ gewandelt werden, so dass die Beziehung zueinander verborgen, jedoch ihre Klartexte äquivalent sind:
+\begin{equation*}
+	C' = C h^{r'}\ \text{mod}\ n = (g^{m} h^{r})h^{r'}\ \text{mod}\ n = g^{m} h^{r''}\ \text{mod}\ n = E(m,r'').
+\end{equation*}

@@ -1,0 +1,76 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/dev/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: BA.aux
+The style file: alphadin.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: bib.bib
+Repeated entry---line 466 of file bib.bib
+ : @inproceedings{damgaard2001generalisation
+ :                                          ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 475 of file bib.bib
+ : @inproceedings{bos2013improved
+ :                               ,
+I'm skipping whatever remains of this entry
+Warning--to sort, need author or key in Cryptosy29:online
+Warning--to sort, need author or key in libcrypt:online
+Warning--to sort, need author or key in gmp:online
+Warning--to sort, need author or key in nlt:online
+Warning--to sort, need author or key in HElib:online
+Warning--empty pages in Brakerski2012LeveledFH
+Warning--empty pages in bost2015machine
+Warning--neither address nor publication date in brakerski2012fully
+Warning--empty pages in chevallier2006encoding
+Warning--empty year in Cryptosy29:online
+Warning--empty year in gmp:online
+Warning--empty year in HElib:online
+Warning--empty year in libcrypt:online
+Warning--empty year in nlt:online
+Warning--there's no year in okamoto1998new
+Warning--empty year in ciphermed:online
+You've used 57 entries,
+            4793 wiz_defined-function locations,
+            1182 strings with 15090 characters,
+and the built_in function-call counts, 35624 in all, are:
+= -- 3909
+> -- 1041
+< -- 1117
++ -- 1302
+- -- 374
+* -- 2304
+:= -- 6171
+add.period$ -- 57
+call.type$ -- 57
+change.case$ -- 298
+chr.to.int$ -- 57
+cite$ -- 78
+duplicate$ -- 999
+empty$ -- 2314
+format.name$ -- 673
+if$ -- 6965
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 194
+newline$ -- 298
+num.names$ -- 156
+pop$ -- 406
+preamble$ -- 1
+purify$ -- 412
+quote$ -- 0
+skip$ -- 1963
+stack$ -- 0
+substring$ -- 2398
+swap$ -- 236
+text.length$ -- 178
+text.prefix$ -- 15
+top$ -- 0
+type$ -- 531
+warning$ -- 16
+while$ -- 329
+width$ -- 62
+write$ -- 712
+(There were 2 error messages)

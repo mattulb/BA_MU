@@ -1,0 +1,16 @@
+\chapter{Einleitung}
+
+In diesem Kapitel wird die inhaltliche Ausrichtung der Bachelorarbeit vorgestellt. %Im Anschluss wird auf verwandte Arbeiten verwiesen.
+
+Ziel dieser Arbeit ist eine Erörterung der Vorteile von homomorphen Kryptosystemen für praktische Anwendungen. Homomorphe Kryptographie ermöglicht das Rechnen mit verschlüsselten Zahlen ohne diese selber zu kennen. Die homomorphen Kryptosysteme, welche in dieser Arbeit behandelt werden, ermöglichen Rechenoperationen mit verschlüsselten Zahlen und genau einem mathematischen Operator. Man nennt solche Kryptosysteme semihomomorph. Während semihomomorphe Kryptosysteme nur eine mathematische Operation auf Chiffren ermöglichen - abhängig von dem gewählten Kryptosystem - erlauben vollhomomorphe Kryptosysteme die Berechnung bis hin zu jeder booleschen Funktion im Chiffreraum im Falle von Gentry \cite{gentry2009fully}. Da letztere jedoch aufgrund hoher Anforderungen an Laufzeiten und Speicherverbrauch weniger praktikabel sind, greift man in der Praxis auf semihomomorphe Kryptosysteme zurück. Dies führt zu verschiedenen, vom jeweiligen Anwendungsfall abhängigen Einsatz eines Kryptosystems. 
+
+\section{Beitrag dieser Bachelorarbeit}
+
+Die semihomomorphen Kryptosysteme unterscheiden sich nicht nur in der mathematischen Operation, die Sie für das Rechnen mit verschlüsselten Zahlen ermöglichen. Für die gleiche Operation existieren verschiedene semihomomorphe Kryptosysteme. In dieser Arbeit sollen die Auswahlkriterien für das eingesetzte Kryptosystem identifiziert werden. Die gesammelten Erkenntnisse werden anschließend benutzt um die einzelnen Kryptosysteme zu klassifizieren als Referenz für den zukünftigen Einsatz in Forschungsarbeiten.
+
+Der Kompromiss zwischen Sicherheit und Praktikabilität ist ein wiederkehrendes Thema in der Kryptographie. Der Gewinn an Praktikabilität durch den Einsatz homomorpher Kryptosysteme wird mit eingeschränkter Sicherheit wegen der unautorisierten Verformbarkeit von Chiffretexten durch unautorisierte Dritte erkauft. Das Rechnen im Chiffreraum kann somit auch als Schwäche des Kryptosystems ausgelegt werden, da beliebige Dritte in der Lage sind verschlüsselte Information zu verändern und so die Integrität der hinterlegten Information anzugreifen. Bei der Analyse der Anwendungsfälle wird untersucht wie mit der Verformbarkeit von Chiffretexten durch einen Angreifer im Einzelnen Umgegangen wird um eine Integrität der hinterlegten Daten zu sichern und das Abschöpfen von Informationen aus dem System zu verhindern.
+
+\section{Aufbau}
+
+Zunächst werden im Kapitel \ref{HK} der Begriff eines Kryptosystems und darauf aufbauende Erweiterungen bis hin zum probabilistischen asymmetrischen Kryptosystem erläutert, welches die Grundlage vieler semihomomorphen Verfahren bildet. Dann werden in Kapitel \ref{SK} verschiedene Sicherheitskriterien erläutert, die in den untersuchten Anwendungsfällen entweder realisiert werden, oder zum Verständnis benötigt werden. Einige dieser Sicherheitskriterien sind insbesondere von Notwendigkeit für die Klassifizierung. In Kapitel \ref{KHK} werden die untersuchten Studien vorgestellt, allerdings nicht in ihrem vollem Umfang, sondern in Bezug auf den Einsatz homomorpher Kryptosysteme, der Gründe für den Einsatz und dem Umgang mit der Verformbarkeit von Chiffretexten durch einen Angreifer.
+

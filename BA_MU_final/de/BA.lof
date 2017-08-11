@@ -1,0 +1,17 @@
+\select@language {ngerman}
+\vskip -2em
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1}{\ignorespaces Implikationen zwischen Sicherheitskriterien kryptografischer Verfahren. Ein Pfeil bedeutet, dass diese Implikation formal bewiesen wurde. Ein durchgestrichener Pfeil bedeutet, dass diese Implikation als ung\IeC {\"u}ltig bewiesen wurde.}}{17}{figure.3.1}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2}{\ignorespaces Die nicht vertrauensw\IeC {\"u}rdige VM f\IeC {\"u}hrt an einer Stelle im Programm einen Hypercallaufruf aus, um den Wert in der Variable c von Paillier nach ElGamal zu konvertieren. Alle Eingabedaten des Programms liegen in der VM verschl\IeC {\"u}sselt vor. Die Konvertierung wird von dem vertrauensw\IeC {\"u}rdigen Hypervisor ausgef\IeC {\"u}hrt. }}{23}{figure.5.2}
+\contentsline {figure}{\numberline {3}{\ignorespaces Der nicht vertrauensw\IeC {\"u}rdige Klassifizierer enth\IeC {\"a}lt verschl\IeC {\"u}sselte Eingaben vom Server und Client. Nach der Klassifizierung darf der Server nichts \IeC {\"u}ber die Merkmalsvektoren vom Clienten und der Client darf nichts \IeC {\"u}ber das Modell f\IeC {\"u}r die Klassifizierung vom Server lernen.}}{24}{figure.5.3}
+\contentsline {figure}{\numberline {4}{\ignorespaces Damit der Klassifizierer in einem bin\IeC {\"a}rem Baum privat einen Pfad von der Wurzel zum Blatt geht, wird dieser als ein Polynom repr\IeC {\"a}sentiert, das privat berechnet wird. Der Wert des Knotens $b_i\in \{0,1\}$ bestimmt, welchen Pfad entlang gegangen wird und ist von einem Vergleich aus Eintr\IeC {\"a}gen des Modells $w$ und Merkmalsvektors $x$ abh\IeC {\"a}ngig. z.B. Falls $x_1\leq w_1 \rightarrow b_1=1$. Das zu diesem Baum zugeh\IeC {\"o}rige Polynom ist: $P(b_1,b_2,c_1,c_2,c_3)=b_1(b_2\cdot c_3+(1-b_1)c_2)+(1-b_1)c_2$.}}{25}{figure.5.4}
+\contentsline {figure}{\numberline {5}{\ignorespaces Ablauf zur Erstellung des Schaltkreises der die Matrixfaktorisierung berechnet.}}{26}{figure.5.5}
+\contentsline {figure}{\numberline {6}{\ignorespaces Ablauf der Einbettung eines nutzerspezifischen Fingerabdrucks. Die Einbettung erfolgt in dem verschl\IeC {\"u}sselten digitalen Bild, damit nur der Kunde das Bild mit Fingerabdruck erhalten kann. W\IeC {\"u}rde der H\IeC {\"a}ndler Zugriff auf das Bild mit Fingerabdruck haben, k\IeC {\"o}nnte er es selber vervielf\IeC {\"a}ltigen. }}{29}{figure.5.6}
+\contentsline {figure}{\numberline {7}{\ignorespaces Alice m\IeC {\"o}chte die ID (das Gesicht einer Person) wissen. Der Algorithmus extrahiert das Gesichtes aus dem Bild und gleicht es mit der Datenbank von Bob ab. Bob kann den Algorithmus gr\IeC {\"o}\IeC {\ss }tenteils alleine ausf\IeC {\"u}hren, ben\IeC {\"o}tigt jedoch einmal die Hilfe von Alice um ein Zwischenergebnis zu quadrieren.}}{31}{figure.5.7}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

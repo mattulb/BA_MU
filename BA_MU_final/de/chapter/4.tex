@@ -1,0 +1,62 @@
+\chapter[Sicherheit von semihomomorphen Kryptosystemen]{\texorpdfstring{Sicherheit von semihomomorphen \\Kryptosystemen}{Sicherheit von semihomomorphen Kryptosystemen}}
+\label{SVHK}
+
+In diesem Kapitel wird gezeigt, dass semihomomorphe Kryptosysteme nicht NM-sicher sein können. Anschließend wird erörtert, welche verbleibenden Sicherheitskriterien semihomomorphe Kryptosysteme erfüllen können.
+
+\section{Homomorphieeigenschaft impliziert Unautorisierte Verformbarkeit}
+
+In den vorangegangenen Kapiteln wurde bereits erwähnt, dass semihomomorphe Kryptosysteme nicht NM-sicher sein können. Dies wurde in der untersuchten Literatur stets informell begründet. Mit der formalen Definition eines semihomomorphen Kryptosystems, und des Sicherheitsziel NM, können wir im Folgenden einen Beweis für die Unerfüllbarkeit von NM-Sicherheit durch ein semihomomorphes Kryptosystemen formulieren.
+
+\newtheorem{theorem2}{Theorem}
+\theoremstyle{plain}
+\begin{theorem2}
+	\label{SMnichtNMsicher}
+	Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein semihomomorphes Kryptosystem. Dann ist $K$ nicht NM-a sicher $(a\in\{CPA,CCA1,CCA2\})$.
+\end{theorem2}
+
+\begin{proof}[]
+ Sei $K = (\mathcal{P},\mathcal{C},\mathcal{K},\mathcal{E},\mathcal{D})$ ein semihomomorphes Kryptosystem und $k=(k_p,k_s)\in\mathcal{K}$ ein Schlüsselpaar des Kryptosystems. Dann ist die Verschlüsselungsfunktion $e_{k_s}:\mathcal{P}\rightarrow\mathcal{C}$ ein Gruppenhomorphismus zwischen den Gruppen $(\mathcal{P},\oplus)$ und $(\mathcal{C},\odot)$. Weiter sei $\mathcal{A} = (\mathcal{A}_1,\mathcal{A}_2)$ ein Angreifer.
+ 
+$\mathcal{A}$ greift $K$ wie folgt an:
+ 
+ \begin{enumerate}
+ 	\item $\mathcal{A}_1$ erzeugt einen Samplingalgorithmus $M$ der beliebige Klartexte aus $\mathcal{P}$ erzeugen kann. $\mathcal{A}_1$ gibt den öffentlichen Schlüssel an $\mathcal{A}_2$ weiter: $s=\{k_p\}$. 
+ 	\item  $\mathcal{A}_2$ erhält den Chiffretext $c=e_{k_s}(x)$ von einem Klartext $x$ den $M$ erzeugt.  
+ 	Dann ist  $x\in\mathcal{P}$ beliebig. Die weiteren Schritte beschreiben wie der Angreifer $c$ verformt zu einem abgeleitetem Chiffretext $c'$. Dazu muss die Relation $\mathcal{R}$ und die Menge $C$ angegeben werden (vgl. Definition \ref{DefKuV}).
+ 
+	$\mathcal{A}_2$ wählt einen Klartext $y\in\mathcal{P}$ und erzeugt den Chiffretext $d=e_{k_p}(y)$. Nun verknüpft der Angreifer die beiden Chiffretexte über die abgeschlossene Verknüpfung $\odot$ auf $\mathcal{C}$: $c'=c\odot d$.
+	
+	Da $e_{k_p}$ ein Homomorphismus ist, gilt:
+	
+	\begin{equation*}
+	c'=c\odot d = e_{k_p}(x)\odot e_{k_p}(y) \stackrel{Hom.}{=} e_{k_p}(\underbrace{x\oplus y}_{\eqqcolon x'})=e_{k_p}(x')
+	\end{equation*}
+	Jetzt definiert $\mathcal{A}_2$ die Mengen $C\coloneqq\{c'\}$ und $X\coloneqq\{x'\}$. Die Elemente der Relation $\mathcal{R}$ sind zweistellige Tupel. $\mathcal{A}_2$ definiert die Relation wie folgt: $(a,b)\in\mathcal{R}$ genau dann, wenn $a=x$ und $b = x\oplus y$.
+	
+	Da $\mathcal{A}_2$ den Klartext $y$ selber wählt, ist die Wahrscheinlichkeit, dass die Relation $\mathcal{R}(x,X)=\mathcal{R}(x,x\oplus y)$ gilt gleich 1.
+	
+	Sei nun $\tilde{x}\neq x$ ein weiterer Klartext welchen der Samplingalgorithmus $M$ erzeugt. Damit die Relation $\mathcal{R}(\tilde{x},x\oplus y)$ erfüllt ist muss gelten:	
+   \begin{alignat*}{2}
+    & & x\oplus y\ &\stackrel{!}{=} \tilde{x}\oplus y\\
+    \intertext{Da $(\mathcal{P},\oplus)$ Gruppe, existiert das eindeutige Inverse $y^{-1}$ von $y$.}
+    &\Leftrightarrow\qquad & x\oplus e_\mathcal{P}\ &= \tilde{x}\oplus e_\mathcal{P}\\
+    &\Leftrightarrow\qquad & x &= \tilde{x} \qquad \lightning\\
+	\end{alignat*}	
+	Damit ist die Relation $\mathcal{R}(\tilde{x},x\oplus y)$ nicht erfüllt und der Vorteil des Angreifers ist 1-0=1. Das heißt, der Angreifer kann bei dem semihomomorphen Kryptosystem $K$ den abgeleiteten Chiffretext $c'$ mit hundertprozentiger Wahrscheinlichkeit erzeugen. Sein Vorteil ist nicht vernachlässigbar klein.
+ \end{enumerate}
+ In dem vorgestellten Angriff benötigt $\mathcal{A}$ keinen Entschlüsselungsapparat um die Menge $C=\{c'\}$ und Relation $\mathcal{R}$ zu erzeugen. Der Angreifer erzeugt $C$ mit der Verknüpfung $\odot$ im Chiffreraum und nutzt lediglich die Homomorphieeigenschaft der Verschlüsselungsfunktion aus. Daher ist der Angriff erfolgreich für alle drei Angreifermodelle NM-CPA, NM-CCA1 und NM-CCA2.
+\end{proof}
+
+\section{Angreifermodelle bei semihomomorphen Kryptosystemen}
+
+Da semihomomorphe Kryptosystem nach Kapitel \ref{HomoKrypto} asymmetrisch sind, hat der Angreifer immer die Option beliebige ausgewählte Klartexte anzugreifen und Klartext-Chiffretext-Paare zu erzeugen. Daher müssen homomorphe Kryptosysteme \textit{mindestens} CPA-Sicherheit gewährleisten, d.h. sie müssen sicher sein gegenüber Angreifern, welche dem CPA Angreifermodell entsprechen. 
+
+Die Frage welche sich jetzt stellt, ist, ob semihomomorphe Kryptosysteme gegenüber den stärkeren Angreifermodellen CCA1 und CCA2 sicher sein können? 
+
+Eine Folgerung von Theorem \ref{SMnichtNMsicher} und den Implikationen zwischen den Angreifermodellen in \ref{impli} ist, dass ein semihomomorphes Kryptosystem \textit{nicht IND-CCA2-sicher} sein kann. Den IND-Sicherheit unter dem CCA2 Angreifermodell würde NM-Sicherheit unter dem CCA2 Angreifermodell implizieren.
+
+\begin{framed}  
+Damit ist IND-CCA1 das stärkste mögliche Angreifermodell, gegen welches semihomomorphe Kryptosysteme sicher sein können. IND-CPA ist das schwächste Angreifermodell, gegen das sie sicher sein müssen.
+\end{framed}  
+
+Es existieren semihomomorphe Kryptosysteme, die eines dieser Sicherheitskriterien erfüllen. In \cite[p.231]{paillier1999public} wird die IND-CPA Sicherheit von Paillier und in \cite[p.7]{wu2008security} die IND-CCA1-Sicherheit von ElGamal nachgewiesen.

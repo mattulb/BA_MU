@@ -1,0 +1,181 @@
+% ---------------------------------------------------------------------  utf8
+\usepackage[T1]{fontenc}
+
+% -----------------------------------------------------------------  language
+\usepackage{ifthen}
+\ifthenelse{\equal{\thesislanguage}{german}}{\usepackage[ngerman]{babel}}{}
+
+% --------------------------------------------------------------------  Fonts
+\usepackage[osf,sc]{mathpazo}
+\usepackage[oldstylenums]{kpfonts}
+\usepackage{microtype}
+\renewcommand*{\ttdefault}{cmtt}
+% make texttt never be bold or italic... It is slated for a reason!
+\let\OldTexttt\texttt
+\renewcommand{\texttt}[1]{\textnormal{\OldTexttt{#1}}}
+\KOMAoption{fontsize}{9.5pt}
+\recalctypearea
+% -----------------------------------------------------------------  Spacings
+\usepackage{setspace}
+%\renewcommand{\baselinestretch}{1.25} % linespacing
+\linespread{1.23}
+\setlength{\parskip}{.8em} % Paragraph spacing
+\usepackage{typearea}
+\areaset{38em}{80\baselineskip}
+\usepackage[top=15mm]{geometry}
+
+% -------------------------------------------------------------------  Colors
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\ifthenelse{\equal{\thesismonochrome}{true}}%
+	{\definecolor[named]{NavyBlue}{cmyk}{0,0,0,1}}%
+	{\definecolor[named]{NavyBlue}{cmyk}{1,.7,0,0}}
+
+% -------------------------------------------------------------------  TOC,TOF,TOL,
+\usepackage{listings}
+\usepackage[figure,table,lstlisting]{totalcount}
+
+% -------------------------------------------------------------------  Titles
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]%
+	{\bfseries\Large\scshape}%
+	{\thechapter}%
+	{.5em}%
+	{\huge\scshape\color{NavyBlue}}
+\titleformat{\section}[hang]%
+	{\bfseries\scshape}%
+	{\thesection}%
+	{.2em}%
+	{\scshape\Large\color{NavyBlue}}
+\titleformat{\subsection}[hang]%
+	{\bfseries\scshape}%
+	{\thesubsection}%
+	{.2em}%
+	{\scshape\large\color{NavyBlue}}
+\titleformat{\subsubsection}[hang]%
+	{\bfseries\scshape}%
+	{\thesubsubsection}%
+	{.2em}%
+	{\scshape\color{NavyBlue}}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{1em}}
+\renewcommand*{\chapterheadendvskip}{\vspace*{-0in}}
+% change TOC accordingly
+\setkomafont{chapterentry}{\normalfont\bfseries\scshape}
+
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+
+% --------------------------------------------------------------------  Lists
+\usepackage{enumitem}
+\setlist{itemsep=-5pt}
+\newcommand{\localtextbulletone}{\textcolor{NavyBlue}{{\tiny$\blacksquare$} }}
+\renewcommand{\labelitemi}{\localtextbulletone}
+\setlist[enumerate]{label=\textbf{\color{NavyBlue}{\arabic*.}}}
+\setlist[description]{font=\normalfont\scshape\bfseries\textcolor{NavyBlue},itemsep=2pt}
+
+% -----------------------------------------------  captions, figures & tables
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
+\counterwithout{figure}{section}
+\counterwithout{table}{chapter}
+\usepackage{subfigure}
+\setkomafont{captionlabel}{\normalfont\scshape\bfseries\textcolor{NavyBlue}}
+\setkomafont{caption}{\normalfont\itshape}
+
+% ----------------------------------------------------------  PDF & Hyperrefs
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{
+	pdftex,
+  bookmarks=true,
+	colorlinks=true,
+  unicode=true,
+	pdftitle={\thesistitle},
+	pdfauthor={\thesisauthor},
+	urlcolor=NavyBlue,
+	linkcolor=black,
+	citecolor=NavyBlue
+}
+
+% -------------------------------------------------  Headers & Page Numbering
+\usepackage[automark]{scrpage2}
+\pagestyle{scrheadings}
+\ifthenelse{\equal{\thesisprintingstyle}{twoside}}{
+	\lehead[]{\scshape\headmark}
+	\lohead[]{}
+	\rehead[]{}
+	\rohead[]{\scshape\headmark}
+	\lefoot[]{\scshape\pagemark}
+	\rofoot[]{\scshape\pagemark}
+	\chead[]{}
+	\cfoot[]{}
+}{
+	\lehead[]{}
+	\lohead[]{}
+	\rohead[]{\scshape\headmark}
+	\rehead[]{\scshape\headmark}
+	\lefoot[]{}
+	\lofoot[]{}
+	\rofoot[]{\scshape\pagemark}
+	\refoot[]{\scshape\pagemark}
+	\chead[]{}
+	\cfoot[]{}
+	\ofoot[]{\scshape\pagemark}
+}
+% this puts the pagenumber on the page where a chapter begins to the side
+\deftripstyle{thesischapterpagestyle}{}{}{}{}{}{\pagemark}
+\renewcommand*{\chapterpagestyle}{thesischapterpagestyle}
+
+% --------------------------------------------------------------  Definitions
+\usepackage{amsthm,thmtools}
+\declaretheoremstyle[
+  spaceabove=\topsep,
+  spacebelow=\topsep,
+  headfont=\scshape\bfseries\color{NavyBlue},
+  headpunct={:},
+%  postheadspace={ },
+  notefont=\itshape,
+  notebraces={(}{)},
+  bodyfont=\normalfont,
+  qed={}
+]{thesistheoremstyle}
+\declaretheorem[style=thesistheoremstyle, name=Definition]{definition}
+\addtotheorempreheadhook[definition]{%
+        \moveright\dimexpr(2.5em)\vbox\bgroup%
+                \hsize=\dimexpr(\linewidth-5em)%
+                \linewidth=\hsize%
+}%
+\addtotheorempostfoothook[definition]{\egroup}
+
+% -------------------------------------------------------------------  Quotes
+\usepackage{csquotes}
+\newcommand{\smallquote}[2]{%
+  \emph{»#1«} #2
+}
+\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em%
+  \hbox{}\hfil#1%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+\newsavebox\mybox
+\newenvironment{bigquote}[1]
+  {\savebox\mybox{#1}\begin{quote}\itshape»}%
+  {«\normalfont\signed{\usebox\mybox}\end{quote}}
+
+% -------------------------------------------------------------------  Examples
+\usepackage{tcolorbox}
+\newenvironment{example}{}{}
+\tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+%\tcolorboxenvironment{example}{blanker,breakable,left=5mm,%
+%before skip=10pt,after skip=10pt,borderline west={1.2mm}{0pt}{NavyBlue!50!white}}
+
+% ----------------------------------------------- Restrict widows and orphans
+\clubpenalty = 10000
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+% ----------------------------------------------------------------- Marginpar
+\let\oldmarginpar\marginpar
+\renewcommand{\marginpar}[1]{%
+  \oldmarginpar{\em\color{Grey}#1}
+}

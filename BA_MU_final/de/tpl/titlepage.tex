@@ -1,0 +1,47 @@
+\begin{titlepage}
+	\vspace*{-5em}
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{tpl/unilogo.pdf}
+		~\\
+		\vspace*{10em}
+		\begin{minipage}{.8\textwidth}
+			\centering
+			%\hrule
+			\vspace*{1em}
+			\begin{spacing}{1.5}
+				{\huge\bfseries\scshape\color{NavyBlue}\thesistitle}
+			\end{spacing}
+			\vspace*{1em}
+			%\hrule
+		\end{minipage}
+		~\\
+		\vspace*{1em}		
+	%	\begin{minipage}{.6\textwidth}
+	%		\centering
+	%		{ %\Large\scshape\thesissubtitle}
+	%	\end{minipage}
+		~\\
+		\vspace*{20em}
+		{\Large\scshape\bfseries\thesisauthor}\\
+		{\large\bfseries\thesismatrikel}
+		~\\
+		\vspace*{2em}
+		\Large\scshape
+		\ifthenelse{\equal{\thesislanguage}{german}}{%
+			\ifthenelse{\equal{\thesistype}{master}}{Masterarbeit}{}%
+			\ifthenelse{\equal{\thesistype}{bachelor}}{Bachelorarbeit}{}%
+			\ifthenelse{\equal{\thesistype}{seminar}}{Seminarausarbeitung}{}%
+			\ifthenelse{\equal{\thesistype}{report}}{Bericht zur Projektgruppe}{}%
+	}{% english
+		\ifthenelse{\equal{\thesistype}{master}}{Master Thesis}{}%
+		\ifthenelse{\equal{\thesistype}{bachelor}}{Bachelor Thesis}{}%
+		\ifthenelse{\equal{\thesistype}{seminar}}{Seminar Paper}{}%
+		\ifthenelse{\equal{\thesistype}{report}}{Lab Report}{}%
+	}%
+	  \ifthenelse{\equal{\thesistype}{custom}}{\thesiscustomtype}{}%
+	  \normalsize\normalfont
+		\vfill
+		\thesissupervisor~\\
+		\thesisaffiliation		
+	\end{center}
+\end{titlepage}

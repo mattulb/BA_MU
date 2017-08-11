@@ -1,0 +1,34 @@
+\chapter{Zusammenfassung}
+
+In dieser Arbeit wurden verschiedene Anwendungsfälle von homomorphen Kryptosystemen untersucht. Dabei wurden die Gründe für die Auswahl des eingesetzten Kryptosystems identifiziert.
+
+In homomorphen Kryptosystemen können erzeugte Chiffretexte alleine durch Kenntnis des öffentlichen Schlüssels von unautorisierten Dritten verformt werden. Mit den Grundlagen aus den Kapiteln \ref{HK} und \ref{SK} wurde dann in Kapitel \ref{SVHK} formal gezeigt, dass alle semihomomorphen Kryptosystem nicht NM-Sicher sind für die Angreifermodelle CPA, CCA1 und CCA2. Anschließend wurden in Kapitel \ref{KHK} Anwendungsfälle von homomorphen Kryptosystemen untersucht. Dabei wurde ausgewertet, wie mit möglichen Integritätsverletzungen durch eine unautorisierte Verformung der Chiffretexte umgegangen wird.
+
+Die Untersuchung der Anwendungsfälle ergab, dass eine unautorisierte Verformung der Chiffretexte beim Einsatz von homomorphen Kryptosysteme oft nicht berücksichtigt werden musste. Aufgrund der geringen Interaktion zwischen den Parteien müssten diese vom Protokoll abweichen können, um mittels unautorisierter Verformbarkeit Einsicht in Chiffretexte erhalten zu können. Dieses wurde jedoch ausgeschlossen, da die Autoren ein honest-but-curious Angreifermodell betrachteten. Nur in einem Fall (\ref{PPMF}) wurde die Integrität der Chiffretexte sichergestellt. Hier wurden die Chiffretexte mit MAC-Codes signiert, bevor sie im Protokoll weiter verarbeitet wurden. Ein Schaltkreis der die Chiffretexte verarbeitet, überprüft den zugehörigen MAC-Code.
+
+Die Klassifizierung der Kryptosysteme ergab eine Präferenz von leveled vollhomomorphen Kryptosystemen um Polynome zu berechnen. Weiter werden die Kryptosysteme von Paillier und Okamoto-Uchiyama flexibel eingesetzt. Beide Kryptosysteme sind additiv-homomorph. Durch geschickte Konstruktion sind jedoch auch Multiplikationen, binäre Operationen oder komplexere Verknüpfungen wie das Skalarprodukt mit ihnen berechenbar. Es wurde mit DGK ein spezialisiertes Kryptosystem identifiziert, das speziell entworfen wurde um verschlüsselte Zahlen schnell vergleichen zu können. Viele Anwendungsfälle setzen homomorphe Kryptosysteme ein, um bekannte Protokolle oder Algorithmen auf verschlüsselten Daten zu realisieren, und so eine Privatsphäre wahrende Datenverarbeitung zu gewährleisten (\ref{autocrypt}, \ref{ML}, \ref{PPMF}, \ref{PPFR}). %Diese Klassifizierung basiert auf einer kleinen Stichprobe und muss damit nicht repräsentativ sein. 
+%oder Rechenkapazitäten an einen Server auszulagern (\ref{PAMD}).
+
+Folgende wiederkehrende Herangehensweisen lassen sich bei der Implementierung von Kryptosystemen ausfindig machen:
+
+%Klassische asymmetrische Kryptosysteme ermöglichen nur dem Eigentümer des privaten Schlüssel Zugang zu Daten was selbst einfachere Analysen der unmöglich macht. Homomorphe Kryptographie kann in der Theorie zwar jede boolesche Funktion berechnen, jedoch nur unter einem hohen Einsatz verfügbarer Ressourcen. Untersuchte Studien verwenden Semihomomorphe und Eingeschränkt Vollhomomorphe Kryptosysteme zum Einsatz komplexer Analysen von vollkommen Verschlüsselten Daten. 
+%In \cite{erkin2009privacy} wurden Features eines Gesichts aus einem verschlüsselten Bild extrahiert. Das extrahierte Feature ist wieder unter dem Schlüssel des Bildeigentümers verschlüsselt, weshalb der Abgleich mit einer Datenbank wiederum einen Vergleich unter Einsatz homomorpher Kryptographie benötigte. Durch viele Optimierungen gelang es erstmalig eine private Gesichtserkennung durchzuführen. Auch in \cite{bos2014private} wurde gezeigt, das homomorphe Kryptographie die eine lineare Regression auf vollkommen verschlüsselten Daten realisieren kann. In der Implementierung wurde im Chiffreraum eine Exponentialfunktion realisiert durch Annäherung mit einer Taylorreihe. 
+
+\begin{itemize}
+	\item \textit{Linearisierung} von Rechnungen: In \ref{PPFR} wurde anstelle des euklidischen Abstands nur der quadratische Abstand betrachtet, um die Funktion mit semihomomorphen Kryptosystemen berechenbar zu machen. In \ref{PAMD} wurde durch eine Linearisierung mit Taylor die Exponentialfunktion angenähert.
+	\item \textit{Beschleunigungen} von Verschlüsselungsalgorithmen durch Berechnung von Faktoren, die nicht direkt von Klartext abhängen. 
+\end{itemize} 
+
+\section{Ausblick}
+
+Die Klassifizierung ergab, dass eine unautorisierte Verformbarkeit der Chiffretexte nicht im betrachteten honest-but-curious Angreifermodell ausgenutzt werden konnte. Dieses Angreifermodell ist realistisch, wenn homomorphe Kryptosysteme eingesetzt werden um Rechenoperationen auf einen Server auszulagern. Der Server tritt dann als Dienstleister auf, der an einer korrekten Ausführung des Protokolls interessiert ist, um sein Geschäftsmodell nicht zu gefährden. Wenn jedoch ein Angreifer diesen Server von dem Dienstleister übernehmen kann, dann muss er sich nicht an das Protokoll halten.
+Das letztere Szenario wird als eine realistischere Abbildung gehalten und daher sollten weitere Veröffentlichungen untersucht werden, die ausschließlich bösartige Angreifer betrachten.
+
+% IND-CCA1 Modell. 
+
+Das Ziel einer Sicherung der Integrität von homomorphen Rechenoperationen überschneidet sich mit dem Begriff des \textit{Verifiable Computing}. Verifiable Computing betrachtet einen \enquote{schwachen} Clienten, der Rechenoperationen an einen oder mehrere \enquote{Arbeiter} auslagert. Mit Verifiable Computing möchte man ein Protokoll bereitstellen in dem die Arbeiter 1) das Ergebnis einer gewünschten Berechnung des Clienten zurückgeben 2) sowie einen Beweis, dass diese Berechnung korrekt ausgeführt wurde.
+
+Verifiable Computing wurde 2010 von Gennaro, Gentry und Parno formalisiert \cite{gennaro2010non}. Darauf basierte Protokolle könnten eine Lösung für die unautorisierte Verformbarkeit bei homomorphen Kryptosystem bieten.
+
+%Intensivere Untersuchung der Beziehungen zwischen den Kryptosystemen um
+%2 Verschlüsselungsmodi: Bitweise Integerweise. => ciphertext expansion
